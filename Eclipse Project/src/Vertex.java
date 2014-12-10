@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 
 /**
  * This class represents an "intersection"

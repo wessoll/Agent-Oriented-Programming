@@ -50,7 +50,7 @@ public class TomTom {
 	 * @param destination					Where you want to got to
 	 * @return								Shortest route from your source to destination
 	 */
-	public List<Vertex> getShortesPathTo(Vertex destination) {
+	public List<Vertex> getShortestPathTo(Vertex destination) {
 		List<Vertex> path = new ArrayList<Vertex>();
 		for (Vertex vertex = destination; vertex != null; vertex = vertex.getPrevious()) {
 			path.add(vertex);

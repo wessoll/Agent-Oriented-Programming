@@ -6,8 +6,12 @@
  */
 public class Edge {
 
+	private CarExample[] cars = new CarExample[]{}; // The Cars that are on this lane
+	private boolean hasObstacle = false;
+	private int speedLimit = 120;
+	
 	public final Vertex destination;
-	public final double weight; //@todo, ofcourse this should be calculated individually for each car
+	public double weight; //@todo, ofcourse this should be calculated individually for each car
 	
 	/**
 	 * Constructor
@@ -19,10 +23,38 @@ public class Edge {
 		this.weight = weight;
 	}
 
+	public CarExample[] getCars() {
+		return cars;
+	}
+
+	public void setCars(CarExample[] cars) {
+		this.cars = cars;
+	}
+
+	public boolean isHasObstacle() {
+		return hasObstacle;
+	}
+
+	public void setHasObstacle(boolean hasObstacle) {
+		this.hasObstacle = hasObstacle;
+	}
+
+	public int getSpeedLimit() {
+		return speedLimit;
+	}
+
+	public void setSpeedLimit(int speedLimit) {
+		this.speedLimit = speedLimit;
+	}
+
 	public Vertex getDestination() {
 		return destination;
 	}
 
+	public void setWeight(double weight) {
+		this.weight = weight;
+	}
+	
 	public double getWeight() {
 		return weight;
 	}

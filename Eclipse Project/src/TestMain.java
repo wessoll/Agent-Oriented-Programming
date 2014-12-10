@@ -9,7 +9,10 @@ public class TestMain {
 
 	public static void main(String[] args) {
 		
-		// First create the Road Network (this can be 
+		CarExample bonoMobiel = new CarExample();
+		
+		
+/*		// First create the Road Network (this can be 
 		RoadNetwork.getInstance().constructRoadNetwork();
 		
 		// Next create the Navigation system (this can be done individually for each car, as in every car has a TomTom)
@@ -21,9 +24,9 @@ public class TestMain {
 		Vertex destination = vertices[5];
 		
 		tomTom.computePaths(source);
-		List<Vertex> theShortestPath = tomTom.getShortesPathTo(destination);
+		List<Vertex> theShortestPath = tomTom.getShortestPathTo(destination);
 		
-		System.out.println("This is your shortest path: \n" + theShortestPath);
+		System.out.println("This is your shortest path: \n" + theShortestPath); // Should print A-B-D-E-F */
 		
 	}
 }
