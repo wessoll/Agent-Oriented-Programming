@@ -1,3 +1,4 @@
+package main;
 
 /**
  * This class represents a line between two Vertices

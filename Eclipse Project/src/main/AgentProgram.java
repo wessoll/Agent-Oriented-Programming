@@ -1,3 +1,4 @@
+package main;
 import jade.core.*;
 import jade.core.Runtime;
 import jade.wrapper.AgentContainer;
@@ -19,13 +20,14 @@ public class AgentProgram {
         AgentContainer container = run.createMainContainer(containerProfile);
         
         try {
-        	Object[] car_args = new Object[4];
-        	car_args[0] = "car_1";
-        	car_args[1] = 'a';
-        	car_args[2] = new Place();
-        	car_args[3] = new Place();
+        	Object[] car_args = new Object[5];
+        	car_args[0] = "ambulance_1";
+        	car_args[1] = 100;
+        	car_args[2] = new Vertex("Ergens");
+        	car_args[3] = new Vertex("Ergens anders");
+        	car_args[4] = true;
         	
-            container.createNewAgent("auto_1", "Car", car_args).start();
+            container.createNewAgent("vehicle_1", "main.Ambulance", car_args).start();
         } catch (StaleProxyException e) {
             e.printStackTrace();
         }
