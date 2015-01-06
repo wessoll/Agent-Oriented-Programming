@@ -1,6 +1,6 @@
 package testing;
 
-import models.BaseCar;
+import models.Car;
 import models.PassengerCar;
 import models.RoadNetwork;
 
@@ -13,7 +13,7 @@ public class TestMain {
 
 	public static void main(String[] args) {
 		
-		BaseCar bonoMobiel = new PassengerCar();
+		Car bonoMobiel = new PassengerCar();
 		bonoMobiel.setSpeed(300);
 
 		// Plot a course

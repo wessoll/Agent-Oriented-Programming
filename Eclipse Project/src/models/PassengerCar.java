@@ -1,6 +1,6 @@
 package models;
 
-public class PassengerCar extends BaseCar {
+public class PassengerCar extends Car {
 
 	public PassengerCar(){
 		super();

@@ -1,6 +1,6 @@
 package models;
 
-import interfaces.IVehicle;
+import interfaces.Vehicle;
 import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
 
@@ -24,7 +24,7 @@ public class DriveBehavior extends Behaviour {
 	@Override
 	public void action() {
 		// @todo move the car forward one place
-		IVehicle car = (IVehicle)this.myAgent; // Parse the Agent to Vehicle so we can use the Vehicle operations
+		Vehicle car = (Vehicle)this.myAgent; // Parse the Agent to Vehicle so we can use the Vehicle operations
 	}
 
 	/**
