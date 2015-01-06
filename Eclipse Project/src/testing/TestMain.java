@@ -1,5 +1,11 @@
-package main;
+package testing;
 import java.util.List;
+
+import models.BaseCar;
+import models.PassengerCar;
+import models.RoadNetwork;
+import models.TomTom;
+import models.Vertex;
 
 /**
  * You can use this class to test the path finding
@@ -10,7 +16,7 @@ public class TestMain {
 
 	public static void main(String[] args) {
 		
-		Car bonoMobiel = new PassengerCar();
+		BaseCar bonoMobiel = new PassengerCar();
 		
 		
 		// First create the Road Network (this can be 

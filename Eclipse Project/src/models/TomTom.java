@@ -1,4 +1,4 @@
-package main;
+package models;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -10,7 +10,11 @@ import java.util.PriorityQueue;
  *
  */
 public class TomTom {
-	private RoadNetwork roadnetwork;
+	private Vertex source;
+	private Vertex destination;
+	private List<Vertex> currentRoute;
+	
+	private static RoadNetwork roadnetwork;
 	
 	public TomTom(){
 		this.roadnetwork = RoadNetwork.getInstance();
@@ -21,6 +25,8 @@ public class TomTom {
 	 * @param source					Where you want to go from
 	 */
 	public void computePaths(Vertex source) {
+		this.source = source;
+		
 		source.setMinDistance(0.);
 		PriorityQueue<Vertex> vertexQueue = new PriorityQueue<Vertex>();
 		
@@ -53,12 +59,20 @@ public class TomTom {
 	 * @return								Shortest route from your source to destination
 	 */
 	public List<Vertex> getShortestPathTo(Vertex destination) {
+		this.destination = destination;
+		
 		List<Vertex> path = new ArrayList<Vertex>();
 		for (Vertex vertex = destination; vertex != null; vertex = vertex.getPrevious()) {
 			path.add(vertex);
 		}
 		Collections.reverse(path);
 		
+		this.currentRoute = path;
+		
 		return path;
 	}
+	
+
+
+
 }

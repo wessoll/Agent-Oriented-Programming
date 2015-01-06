@@ -1,6 +1,6 @@
-package main;
+package models;
 
-public class Ambulance extends Car{
+public class Ambulance extends BaseCar{
 	private boolean alarms_on;
 	
 	public Ambulance(){

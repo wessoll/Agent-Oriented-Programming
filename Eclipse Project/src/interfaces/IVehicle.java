@@ -1,5 +1,5 @@
 package interfaces;
 
-public interface Vehicle {
+public interface IVehicle {
 	public void setup();
 }

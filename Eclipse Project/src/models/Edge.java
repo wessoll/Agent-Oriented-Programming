@@ -1,4 +1,4 @@
-package main;
+package models;
 
 /**
  * This class represents a line between two Vertices
@@ -7,7 +7,7 @@ package main;
  */
 public class Edge {
 
-	private Car[] cars = new Car[]{}; // The Cars that are on this lane
+	private BaseCar[] cars = new BaseCar[]{}; // The Cars that are on this lane
 	private boolean hasObstacle = false;
 	private int speedLimit = 120;
 	
@@ -24,11 +24,11 @@ public class Edge {
 		this.weight = weight;
 	}
 
-	public Car[] getCars() {
+	public BaseCar[] getCars() {
 		return cars;
 	}
 
-	public void setCars(Car[] cars) {
+	public void setCars(BaseCar[] cars) {
 		this.cars = cars;
 	}
 

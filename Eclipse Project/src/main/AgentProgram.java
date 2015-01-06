@@ -1,4 +1,5 @@
 package main;
+import models.Ambulance;
 import jade.core.*;
 import jade.core.Runtime;
 import jade.wrapper.AgentContainer;
