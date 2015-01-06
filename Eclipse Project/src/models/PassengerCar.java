@@ -1,9 +1,9 @@
 package models;
 
-public class PassengerCar extends Car {
+public class PassengerCar extends Car{
 
-	public PassengerCar(){
-		super();
+	public PassengerCar(Vertex starting_point, Vertex destination, int speed, int identifier){
+		super(starting_point, destination, speed, "Passenger_" + identifier);
 		
 		// For test purposes we want to take a travel from Den Haag to Groningen
 		getNavigation().plotRoute(
@@ -21,6 +21,7 @@ public class PassengerCar extends Car {
 		addBehaviour(new DriveBehavior(this) {
 		      protected void handleElapsedTimeout() {
 		    	  // nop
-		      }});
+		      }}
+		);
 	}
 }
