@@ -10,8 +10,8 @@ import java.util.PriorityQueue;
  *
  */
 public class TomTom {
-	private Vertex source;
-	private Vertex destination;
+	private Vertex currentSource;
+	private Vertex currentDestination;
 	private List<Vertex> currentRoute;
 	
 	private static RoadNetwork roadnetwork;
@@ -20,13 +20,27 @@ public class TomTom {
 		this.roadnetwork = RoadNetwork.getInstance();
 	}
 	
+	public void plotRoute(Vertex source, Vertex destination) {
+		this.currentSource = source;
+		this.currentDestination = destination;
+		
+		this.computePaths(source);
+		this.currentRoute = this.getShortestPathTo(destination);
+	}
+	
+	public void printCurrentRoute() {
+		System.out.println("Current Route: " + currentRoute);
+	}
+	
+	/**
+	 * Utility Methods
+	 */
+	
 	/**
 	 * Should be called before getShortestPathTo(destination)
 	 * @param source					Where you want to go from
 	 */
-	public void computePaths(Vertex source) {
-		this.source = source;
-		
+	private void computePaths(Vertex source) {
 		source.setMinDistance(0.);
 		PriorityQueue<Vertex> vertexQueue = new PriorityQueue<Vertex>();
 		
@@ -58,9 +72,7 @@ public class TomTom {
 	 * @param destination					Where you want to got to
 	 * @return								Shortest route from your source to destination
 	 */
-	public List<Vertex> getShortestPathTo(Vertex destination) {
-		this.destination = destination;
-		
+	private List<Vertex> getShortestPathTo(Vertex destination) {
 		List<Vertex> path = new ArrayList<Vertex>();
 		for (Vertex vertex = destination; vertex != null; vertex = vertex.getPrevious()) {
 			path.add(vertex);
@@ -72,7 +84,41 @@ public class TomTom {
 		return path;
 	}
 	
+	/**
+	 * Getters/Setters
+	 */
 
+	public Vertex getCurrentSource() {
+		return currentSource;
+	}
 
+	public void setCurrentSource(Vertex currentSource) {
+		this.currentSource = currentSource;
+	}
 
+	public Vertex getCurrentDestination() {
+		return currentDestination;
+	}
+
+	public void setCurrentDestination(Vertex currentDestination) {
+		this.currentDestination = currentDestination;
+	}
+
+	public List<Vertex> getCurrentRoute() {
+		return currentRoute;
+	}
+
+	public void setCurrentRoute(List<Vertex> currentRoute) {
+		this.currentRoute = currentRoute;
+	}
+
+	public static RoadNetwork getRoadnetwork() {
+		return roadnetwork;
+	}
+
+	public static void setRoadnetwork(RoadNetwork roadnetwork) {
+		TomTom.roadnetwork = roadnetwork;
+	}
+	
+	
 }
