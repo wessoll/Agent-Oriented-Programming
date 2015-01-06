@@ -10,9 +10,10 @@ import java.util.PriorityQueue;
  *
  */
 public class TomTom {
-
-	public TomTom() {
-		
+	private RoadNetwork roadnetwork;
+	
+	public TomTom(){
+		this.roadnetwork = RoadNetwork.getInstance();
 	}
 	
 	/**

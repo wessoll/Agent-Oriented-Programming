@@ -10,10 +10,10 @@ public class TestMain {
 
 	public static void main(String[] args) {
 		
-		CarExample bonoMobiel = new CarExample();
+		Car bonoMobiel = new PassengerCar();
 		
 		
-/*		// First create the Road Network (this can be 
+		// First create the Road Network (this can be 
 		RoadNetwork.getInstance().constructRoadNetwork();
 		
 		// Next create the Navigation system (this can be done individually for each car, as in every car has a TomTom)

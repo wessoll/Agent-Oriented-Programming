@@ -5,14 +5,10 @@ package main;
  *
  */
 public class RoadNetwork {
-
 	private static RoadNetwork instance = null;
-
 	private Vertex[] vertices;
 	
-	protected RoadNetwork() {
-		
-	}
+	protected RoadNetwork() {}
 	
 	public static RoadNetwork getInstance() {
 		if (instance == null) {
@@ -59,6 +55,4 @@ public class RoadNetwork {
 	public void setVertices(Vertex[] vertices) {
 		this.vertices = vertices;
 	}
-	
-	
 }

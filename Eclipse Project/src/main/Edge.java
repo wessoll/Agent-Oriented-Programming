@@ -7,7 +7,7 @@ package main;
  */
 public class Edge {
 
-	private CarExample[] cars = new CarExample[]{}; // The Cars that are on this lane
+	private Car[] cars = new Car[]{}; // The Cars that are on this lane
 	private boolean hasObstacle = false;
 	private int speedLimit = 120;
 	
@@ -24,11 +24,11 @@ public class Edge {
 		this.weight = weight;
 	}
 
-	public CarExample[] getCars() {
+	public Car[] getCars() {
 		return cars;
 	}
 
-	public void setCars(CarExample[] cars) {
+	public void setCars(Car[] cars) {
 		this.cars = cars;
 	}
 
