@@ -1,9 +1,12 @@
 package main;
 import models.Ambulance;
+import models.Edge;
+import models.PassengerCar;
 import jade.core.*;
 import jade.core.Runtime;
 import jade.wrapper.AgentContainer;
 import jade.wrapper.AgentController;
+import jade.wrapper.ContainerController;
 import jade.wrapper.ControllerException;
 import jade.wrapper.StaleProxyException;
 
@@ -14,20 +17,27 @@ public class AgentProgram {
      * @param args
      */
     public static void main(String[] args) {
-        Runtime run = Runtime.instance();
+        Runtime rt = Runtime.instance(); // Get Jade Runtime
         
-        Profile containerProfile = new ProfileImpl();
-        containerProfile.setParameter(Profile.PLATFORM_ID, "platform");
-        containerProfile.setParameter(Profile.CONTAINER_NAME, "mainContainer");
+        // Create a default Profile
+        Profile defaultProfile = new ProfileImpl();
+        defaultProfile.setParameter(Profile.PLATFORM_ID, "platform");
+        defaultProfile.setParameter(Profile.CONTAINER_NAME, "mainContainer");
         
-        AgentContainer container = run.createMainContainer(containerProfile);
+        // Create the Main Container
+        ContainerController mainContainer = rt.createMainContainer(defaultProfile);
+ 
+       try {
+    	   // Create the Agent
+        	AgentController agentController = mainContainer.createNewAgent(
+        			"Bono Mobiel", 
+        			"models.PassengerCar", 
+        			null); 
+        	     
+        	// Start Agent
+        	agentController.start();
+
         
-        try {
-        	Agent agent = new Ambulance();
-        	
-        	container.acceptNewAgent("test_Agent", agent);
-        	AgentController agent_2 = container.getAgent("test_Agent");
-        	System.out.println("Test: " + agent_2.getName());
         } catch (StaleProxyException e) {
             e.printStackTrace();
         } catch (ControllerException e){
