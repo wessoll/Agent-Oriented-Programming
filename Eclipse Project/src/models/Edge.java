@@ -1,43 +1,58 @@
 package models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * This class represents a line between two Vertices
  * @author wesley
  *
  */
 public class Edge {
-
-	private Car[] cars = new Car[]{}; // The Cars that are on this lane
 	private boolean hasObstacle = false;
+	private static List<Car> cars; // The Cars that are on this lane (the same for every car)
+	private boolean isClosed = false;
 	private int speedLimit = 120;
+	private int id;
+	private boolean closed;
 	
 	public final Vertex destination;
-	public double weight; //@todo, ofcourse this should be calculated individually for each car
+	public double weight;
 	
 	/**
 	 * Constructor
 	 * @param destination				Where you want to go to
 	 * @param weight					The weight for this path
 	 */
-	public Edge(Vertex destination, double weight) {
+	public Edge(Vertex destination, double weight, int id) {
+		this.cars = new ArrayList<Car>();
+		this.id = id;
 		this.destination = destination;
 		this.weight = weight;
 	}
 
-	public Car[] getCars() {
+	public List<Car> getCars() {
 		return cars;
 	}
 
-	public void setCars(Car[] cars) {
-		this.cars = cars;
+	public void setCars(List<Car> cars) {
+		Edge.cars = cars;
 	}
 
+	public void addCar(Car car) {
+		Edge.cars.add(car);
+	}
+	
+	public void removeCar(Car car) {
+		Edge.cars.remove(car);
+	}
+	
 	public boolean isHasObstacle() {
-		return hasObstacle;
+		return isClosed;
 	}
 
 	public void setHasObstacle(boolean hasObstacle) {
-		this.hasObstacle = hasObstacle;
+		this.isClosed = hasObstacle;
 	}
 
 	public int getSpeedLimit() {
@@ -58,6 +73,22 @@ public class Edge {
 	
 	public double getWeight() {
 		return weight;
+	}
+
+	public boolean isClosed() {
+		return isClosed;
+	}
+
+	public void setClosed(boolean isClosed) {
+		this.isClosed = isClosed;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 	

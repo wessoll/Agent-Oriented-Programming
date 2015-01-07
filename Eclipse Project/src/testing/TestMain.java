@@ -18,8 +18,8 @@ public class TestMain {
 
 		// Plot a course
 		bonoMobiel.getNavigation().plotRoute(
-				RoadNetwork.getInstance().getVertex("Amsterdam"), 
-				RoadNetwork.getInstance().getVertex("Groningen"));
+				bonoMobiel.getNavigation().getRoadnetwork().getVertex("Amsterdam"), 
+				bonoMobiel.getNavigation().getRoadnetwork().getVertex("Groningen"));
 		
 		bonoMobiel.getNavigation().printCurrentRoute();		
 	}

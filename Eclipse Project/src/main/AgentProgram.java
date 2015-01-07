@@ -1,9 +1,9 @@
 package main;
 import jade.core.*;
 import jade.core.Runtime;
-import jade.wrapper.AgentContainer;
 import jade.wrapper.AgentController;
 import jade.wrapper.ControllerException;
+import jade.wrapper.ContainerController;
 import jade.wrapper.StaleProxyException;
 
 
@@ -21,12 +21,34 @@ public class AgentProgram {
         
         AgentContainer container = run.createMainContainer(containerProfile);
         
-        Agent agent = new Ambulance();
+        Agent agen
+       try {
+    	   // Create the Agent
+        	AgentController agentController = mainContainer.createNewAgent(
+        			"Bono Mobiel", 
+        			"models.PassengerCar", 
+        			null); 
+        	
+        	mainContainer.createNewAgent(
+        			"Toyota", 
+        			"models.PassengerCar", 
+        			null);
+        	
+        	mainContainer.createNewAgent(
+        			"Volkswagen",
+        			"models.PassengerCar",
+        			null);
+        	     
+        	mainContainer.createNewAgent(
+        			"MaxtrixUtrechtGroningen", 
+        			"models.MatrixBoard", 
+        			null);
+        	// Start Agent
+        	agentController.start();
+
         
-        try {
-        	container.acceptNewAgent("test_Agent", agent);
-        } catch (ControllerException e){
-        	e.printStackTrace();
+        } catch (StaleProxyException e) {
+            e.printStackTrace();
         }
     }
 }

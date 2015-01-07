@@ -1,0 +1,17 @@
+package models;
+
+import jade.core.Agent;
+
+public class MatrixBoard extends Agent{
+	public void red(){
+		
+	}
+	
+	public void orange(){
+		
+	}
+	
+	public void green(){
+		
+	}
+}

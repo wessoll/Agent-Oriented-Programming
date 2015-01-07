@@ -2,6 +2,7 @@ package models;
 import jade.core.Agent;
 
 public abstract class Car extends Agent implements interfaces.Vehicle{
+	private static final long serialVersionUID = -18530235733015824L;
 	protected int speed;
 	protected String identifier;
 	protected Vertex starting_point;

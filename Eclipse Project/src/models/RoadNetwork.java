@@ -1,21 +1,24 @@
 package models;
+
+import jade.core.Agent;
+import jade.lang.acl.ACLMessage;
+
 /**
  * This is the "God" class which maintains the Road Network (all roads)
  * @author wesley
  *
  */
-public class RoadNetwork {
-	private static RoadNetwork instance = null;
+public class RoadNetwork extends Agent {
+	private static final long serialVersionUID = 1381214470907052019L;
+
 	private Vertex[] vertices;
 	
-	protected RoadNetwork() {}
+	public RoadNetwork() {
+		constructRoadNetwork();
+	}
 	
-	public static RoadNetwork getInstance() {
-		if (instance == null) {
-			instance = new RoadNetwork();
-			instance.constructRoadNetwork();
-		}
-		return instance;
+	public void setup() {
+		
 	}
 	
 	/**
@@ -29,28 +32,28 @@ public class RoadNetwork {
 		Vertex denHaag = new Vertex("Den Haag");
 		
 		amsterdam.setAdjacencies(new Edge[] {
-				new Edge(denHelder, 90),
-				new Edge(groningen, 200),
-				new Edge(utrecht, 40),
-				new Edge(denHaag, 65)
+				new Edge(denHelder, 90, 1),
+				new Edge(groningen, 200, 2),
+				new Edge(utrecht, 40, 3),
+				new Edge(denHaag, 65, 4)
 		});
 		groningen.setAdjacencies(new Edge[] {
-				new Edge(denHelder, 155),
-				new Edge(amsterdam, 200),
-				new Edge(utrecht, 195)
+				new Edge(denHelder, 155, 5),
+				new Edge(amsterdam, 200, 6),
+				new Edge(utrecht, 195, 7)
 		});
 		utrecht.setAdjacencies(new Edge[] {
-				new Edge(denHaag, 65),
-				new Edge(amsterdam, 40),
-				new Edge(groningen, 195)
+				new Edge(denHaag, 65, 8),
+				new Edge(amsterdam, 40, 9),
+				new Edge(groningen, 195, 10)
 		});		
 		denHaag.setAdjacencies(new Edge[] {
-				new Edge(amsterdam, 65),
-				new Edge(utrecht, 65)
+				new Edge(amsterdam, 65, 11),
+				new Edge(utrecht, 65, 12)
 		});
 		denHelder.setAdjacencies(new Edge[] {
-				new Edge(groningen, 155),
-				new Edge(amsterdam, 90)
+				new Edge(groningen, 155, 13),
+				new Edge(amsterdam, 90, 14)
 		});
 		
 		
@@ -65,7 +68,30 @@ public class RoadNetwork {
 		}
 		return null;
 	}
+
+	public Vertex[] getVertices() {
+		return vertices;
+	}
 	
+	private void updateRoadNetwork(int edgeId, boolean isClosed) {
+		// Find the Edge corresponding with the edgeId
+		for(Vertex vertice : this.vertices) {
+			for(Edge edge : vertice.getAdjacencies()) {
+				if (edge.getId() == edgeId) {
+					edge.setClosed(isClosed);
+					break;
+				}
+			}
+		}
+	}
 	
-	
+	public void recieveMessage(){
+		ACLMessage msg = receive();
+		if (msg != null){
+			System.out.println("Herberekenen van route!");
+			String message = msg.getContent();
+			String[] infoList = message.split(", ");
+			updateRoadNetwork(Integer.parseInt(infoList[0]), Boolean.parseBoolean(infoList[1]));
+		}
+	}
 }

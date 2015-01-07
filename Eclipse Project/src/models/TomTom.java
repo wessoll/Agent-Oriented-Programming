@@ -10,20 +10,20 @@ import java.util.PriorityQueue;
  *
  */
 public class TomTom {
-	private Vertex currentSource;
-	private Vertex currentDestination;
 	private List<Vertex> currentRoute;
+	private Edge currentEdge;
 	
-	private static RoadNetwork roadnetwork;
+	private RoadNetwork roadnetwork;
 	
 	public TomTom(){
-		this.roadnetwork = RoadNetwork.getInstance();
+		currentRoute = new ArrayList<Vertex>();
+		currentEdge = null;
+		
+		// Create a copy of the RoadNetwork with the basic weights, so we can modify the weights ourselfs
+		this.roadnetwork = new RoadNetwork();
 	}
 	
 	public void plotRoute(Vertex source, Vertex destination) {
-		this.currentSource = source;
-		this.currentDestination = destination;
-		
 		this.computePaths(source);
 		this.currentRoute = this.getShortestPathTo(destination);
 	}
@@ -88,22 +88,6 @@ public class TomTom {
 	 * Getters/Setters
 	 */
 
-	public Vertex getCurrentSource() {
-		return currentSource;
-	}
-
-	public void setCurrentSource(Vertex currentSource) {
-		this.currentSource = currentSource;
-	}
-
-	public Vertex getCurrentDestination() {
-		return currentDestination;
-	}
-
-	public void setCurrentDestination(Vertex currentDestination) {
-		this.currentDestination = currentDestination;
-	}
-
 	public List<Vertex> getCurrentRoute() {
 		return currentRoute;
 	}
@@ -112,12 +96,20 @@ public class TomTom {
 		this.currentRoute = currentRoute;
 	}
 
-	public static RoadNetwork getRoadnetwork() {
+	public RoadNetwork getRoadnetwork() {
 		return roadnetwork;
 	}
 
-	public static void setRoadnetwork(RoadNetwork roadnetwork) {
-		TomTom.roadnetwork = roadnetwork;
+	public void setRoadnetwork(RoadNetwork roadnetwork) {
+		this.roadnetwork = roadnetwork;
+	}
+
+	public Edge getCurrentEdge() {
+		return currentEdge;
+	}
+
+	public void setCurrentEdge(Edge currentEdge) {
+		this.currentEdge = currentEdge;
 	}
 	
 	
