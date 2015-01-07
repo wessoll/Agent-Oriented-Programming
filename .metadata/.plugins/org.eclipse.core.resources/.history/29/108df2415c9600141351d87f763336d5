@@ -21,10 +21,6 @@ public class RoadNetwork extends Agent {
 		constructRoadNetwork();
 	}
 	
-	public void setup() {
-		
-	}
-	
 	/**
 	 * Creates a new Road Network by linking vertices with each other
 	 */
@@ -76,17 +72,9 @@ public class RoadNetwork extends Agent {
 	public Vertex[] getVertices() {
 		return vertices;
 	}
-	
-	private void updateRoadNetwork(int edgeId, boolean isClosed) {
-		// Find the Edge corresponding with the edgeId
-		for(Vertex vertice : this.vertices) {
-			for(Edge edge : vertice.getAdjacencies()) {
-				if (edge.getId() == edgeId) {
-					edge.setClosed(isClosed);
-					break;
-				}
-			}
-		}
+
+	public void setVertices(Vertex[] vertices) {
+		this.vertices = vertices;
 	}
 	
 	public void recieveMessage(){
@@ -94,9 +82,7 @@ public class RoadNetwork extends Agent {
 		if (msg != null){
 			System.out.println("Herberekenen van route!");
 			String message = msg.getContent();
-			String[] infoList = message.split(", ");
-			this.id = Integer.parseInt(infoList[0]);
-			this.isClosed = Boolean.parseBoolean(infoList[1]);
+			String[] elephantList = message.split(", ");
 		}
 		else{
 			
