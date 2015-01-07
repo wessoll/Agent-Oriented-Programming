@@ -1,14 +1,10 @@
 package models;
-
-import jade.core.Agent;
-import jade.lang.acl.ACLMessage;
-
 /**
  * This is the "God" class which maintains the Road Network (all roads)
  * @author wesley
  *
  */
-public class RoadNetwork extends Agent {
+public class RoadNetwork extend Agent {
 	private Vertex[] vertices;
 	
 	public RoadNetwork() {
@@ -71,14 +67,4 @@ public class RoadNetwork extends Agent {
 		this.vertices = vertices;
 	}
 	
-	public void recieveMessage(){
-		ACLMessage msg = receive();
-		if (msg != null){
-			System.out.println("Herberekenen van route!");
-		}
-		else{
-			
-		}
-			
-	}
 }

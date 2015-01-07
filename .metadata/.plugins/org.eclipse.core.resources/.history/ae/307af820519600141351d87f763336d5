@@ -5,15 +5,14 @@ import jade.core.Agent;
 import jade.lang.acl.ACLMessage;
 
 public class MatrixBoard extends Agent{
-	
 	public MatrixBoard(){
 		super();
 		System.out.println("Matrix bord aangemaakt");
 	}
 	
-	public void sendMessage(int edge_id, boolean closed){
+	public void sendMessage(String message){
 		ACLMessage msg = new ACLMessage( ACLMessage.INFORM );
-	    msg.setContent(edge_id + ", " + closed);
+	    msg.setContent(message);
 	    for (int i = 1; i<=2; i++)
 	        msg.addReceiver( new AID( "store" + i, AID.ISLOCALNAME) );
 	    //AID dest = null;
@@ -22,11 +21,15 @@ public class MatrixBoard extends Agent{
 	    
 	}
 	
-	public void closeRoad(int edge_id, boolean closed){
-		sendMessage(edge_id, true);
+	public void closeRoad(){
+		sendMessage("Road is closed");
 	}
 	
-	public void clearRoad(int edge_id, boolean closed){
-		sendMessage(edge_id, false);
+	public void blockRoad(){
+		sendMessage("1 line is closed");
+	}
+	
+	public void clearRoad(){
+		sendMessage("road is clear");
 	}
 }

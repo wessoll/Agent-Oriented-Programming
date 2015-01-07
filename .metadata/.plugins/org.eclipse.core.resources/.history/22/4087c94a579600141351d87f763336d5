@@ -12,9 +12,10 @@ import java.util.UUID;
 public class Edge {
 
 	private static List<BaseCar> cars; // The Cars that are on this lane (the same for every car)
+	private static List<MatrixBoard> matrix;
 	private boolean isClosed = false;
 	private int speedLimit = 120;
-	private int id;
+	private int id = null;
 	
 	public final Vertex destination;
 	public double weight;

@@ -12,9 +12,10 @@ import java.util.UUID;
 public class Edge {
 
 	private static List<BaseCar> cars; // The Cars that are on this lane (the same for every car)
+	private static List<MatrixBoard> matrix;
 	private boolean isClosed = false;
 	private int speedLimit = 120;
-	private int id;
+	private String = null;
 	
 	public final Vertex destination;
 	public double weight;
@@ -24,9 +25,9 @@ public class Edge {
 	 * @param destination				Where you want to go to
 	 * @param weight					The weight for this path
 	 */
-	public Edge(Vertex destination, double weight, int id) {
+	public Edge(Vertex destination, double weight) {
 		this.cars = new ArrayList<BaseCar>();
-		this.id = id;
+		
 		this.destination = destination;
 		this.weight = weight;
 	}
