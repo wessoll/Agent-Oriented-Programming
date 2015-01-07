@@ -84,7 +84,7 @@ public class RoadNetwork extends Agent {
 			String message = msg.getContent();
 			String[] infoList = message.split(", ");
 			this.id = Integer.parseInt(infoList[0]);
-			this.isClosed = Boolean.parseBoolean(infoList[1]);
+			this.isClosed = Boolean.parseBoolean(inforList[1]);
 		}
 		else{
 			
