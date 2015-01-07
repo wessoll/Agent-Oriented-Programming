@@ -13,6 +13,9 @@ public class RoadNetwork extends Agent {
 
 	private Vertex[] vertices;
 	
+	private int id;
+	private boolean isClosed;
+	
 	public RoadNetwork() {
 		constructRoadNetwork();
 	}
@@ -91,6 +94,8 @@ public class RoadNetwork extends Agent {
 			System.out.println("Herberekenen van route!");
 			String message = msg.getContent();
 			String[] infoList = message.split(", ");
+			//this.id = Integer.parseInt(infoList[0]);
+			//this.isClosed = Boolean.parseBoolean(infoList[1]);
 			updateRoadNetwork(Integer.parseInt(infoList[0]), Boolean.parseBoolean(infoList[1]));
 		}
 	}

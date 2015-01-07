@@ -2,8 +2,6 @@ package models;
 
 public class PassengerCar extends BaseCar {
 
-	private static final long serialVersionUID = 8962335670763104350L;
-
 	public PassengerCar(){
 		super();
 		
