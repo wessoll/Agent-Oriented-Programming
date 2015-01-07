@@ -1,5 +1,7 @@
 package models;
 
+import behaviours.DriveBehavior;
+
 public class PassengerCar extends Car{
 	private static final long serialVersionUID = 8962335670763104350L;
 	

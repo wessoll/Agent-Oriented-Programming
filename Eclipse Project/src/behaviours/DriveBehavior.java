@@ -1,5 +1,8 @@
-package models;
+package behaviours;
 
+import models.Car;
+import models.Edge;
+import models.Vertex;
 import interfaces.Vehicle;
 import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
