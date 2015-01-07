@@ -1,8 +1,13 @@
 package main;
+import models.Ambulance;
+import models.Edge;
+import models.PassengerCar;
 import jade.core.*;
 import jade.core.Runtime;
+import jade.wrapper.AgentContainer;
 import jade.wrapper.AgentController;
 import jade.wrapper.ContainerController;
+import jade.wrapper.ControllerException;
 import jade.wrapper.StaleProxyException;
 
 
@@ -49,6 +54,8 @@ public class AgentProgram {
         
         } catch (StaleProxyException e) {
             e.printStackTrace();
+        } catch (ControllerException e){
+        	e.printStackTrace();
         }
     }
 }

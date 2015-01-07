@@ -9,8 +9,6 @@ import jade.lang.acl.ACLMessage;
  *
  */
 public class RoadNetwork extends Agent {
-	private static final long serialVersionUID = 1381214470907052019L;
-
 	private Vertex[] vertices;
 	
 	private int id;

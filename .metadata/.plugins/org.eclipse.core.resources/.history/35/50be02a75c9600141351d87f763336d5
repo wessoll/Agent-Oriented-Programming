@@ -1,8 +1,8 @@
 package models;
 import jade.core.Agent;
+import jade.lang.acl.ACLMessage;
 
 public abstract class BaseCar extends Agent implements interfaces.IVehicle {
-	private static final long serialVersionUID = -18530235733015824L;
 	protected int speed;
 	protected String identifier;
 	protected TomTom navigation;
@@ -29,5 +29,14 @@ public abstract class BaseCar extends Agent implements interfaces.IVehicle {
 		this.navigation = navigation;
 	}
 	
-	
+	public void recieveMessage(){
+		ACLMessage msg = receive();
+		if (msg != null){
+			System.out.println("Herberekenen van route!");
+		}
+		else{
+			
+		}
+			
+	}
 }
