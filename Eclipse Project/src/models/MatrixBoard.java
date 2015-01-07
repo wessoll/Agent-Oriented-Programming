@@ -7,10 +7,7 @@ import jade.lang.acl.ACLMessage;
 public class MatrixBoard extends Agent{
 	private static final long serialVersionUID = -5826558783363913396L;
 
-	public MatrixBoard(){
-		super();
-		System.out.println("Matrix bord aangemaakt");
-	}
+	public MatrixBoard(){}
 	
 	public void sendMessage(int edge_id, boolean closed){
 		ACLMessage msg = new ACLMessage( ACLMessage.INFORM );
