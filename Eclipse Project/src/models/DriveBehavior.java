@@ -62,7 +62,7 @@ public class DriveBehavior extends Behaviour {
 	 */
 	@Override
 	public boolean done() {
-		BaseCar car = (BaseCar)this.myAgent;
+		Car car = (Car)this.myAgent;
 		
 		return car.getNavigation().getCurrentRoute().isEmpty(); // if Car has no route anymore (i.e. reached it's destination)	
 	}	

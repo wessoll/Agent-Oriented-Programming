@@ -1,8 +1,11 @@
 package testing;
 
+import interfaces.Vehicle;
+import jade.core.Agent;
 import models.Car;
 import models.PassengerCar;
 import models.RoadNetwork;
+import models.Vertex;
 
 /**
  * You can use this class to test the path finding
@@ -13,7 +16,7 @@ public class TestMain {
 
 	public static void main(String[] args) {
 		
-		Car bonoMobiel = new PassengerCar();
+		Vehicle bonoMobiel = new PassengerCar(new Vertex(""), new Vertex(""), 120, 1);
 		bonoMobiel.setSpeed(300);
 
 		// Plot a course

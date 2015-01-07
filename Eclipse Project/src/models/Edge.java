@@ -1,5 +1,7 @@
 package models;
 
+import interfaces.Vehicle;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +12,7 @@ import java.util.List;
  */
 public class Edge {
 	private boolean hasObstacle = false;
-	private static List<Car> cars; // The Cars that are on this lane (the same for every car)
+	private static List<Vehicle> cars; // The Cars that are on this lane (the same for every car)
 	private boolean isClosed = false;
 	private int speedLimit = 120;
 	private int id;
@@ -25,25 +27,25 @@ public class Edge {
 	 * @param weight					The weight for this path
 	 */
 	public Edge(Vertex destination, double weight, int id) {
-		this.cars = new ArrayList<Car>();
+		this.cars = new ArrayList<Vehicle>();
 		this.id = id;
 		this.destination = destination;
 		this.weight = weight;
 	}
 
-	public List<Car> getCars() {
+	public List<Vehicle> getCars() {
 		return cars;
 	}
 
-	public void setCars(List<Car> cars) {
+	public void setCars(List<Vehicle> cars) {
 		Edge.cars = cars;
 	}
 
-	public void addCar(Car car) {
+	public void addCar(Vehicle car) {
 		Edge.cars.add(car);
 	}
 	
-	public void removeCar(Car car) {
+	public void removeCar(Vehicle car) {
 		Edge.cars.remove(car);
 	}
 	

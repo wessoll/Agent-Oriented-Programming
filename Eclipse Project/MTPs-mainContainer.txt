@@ -1,1 +1,1 @@
-http://fra-staff-146-50-138-91.wireless.uva.nl:7778/acc
+http://192.168.178.17:7778/acc
