@@ -7,8 +7,8 @@ public class PassengerCar extends BaseCar {
 		
 		// For test purposes we want to take a travel from Den Haag to Groningen
 		getNavigation().plotRoute(
-				RoadNetwork.getInstance().getVertex("Den Haag"), 
-				RoadNetwork.getInstance().getVertex("Groningen"));
+				getNavigation().getRoadnetwork().getVertex("Den Haag"), 
+				getNavigation().getRoadnetwork().getVertex("Groningen"));
 		
 		// The route is saved in the navigation and we can print it
 		getNavigation().printCurrentRoute();

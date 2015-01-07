@@ -5,17 +5,10 @@ package models;
  *
  */
 public class RoadNetwork {
-	private static RoadNetwork instance = null;
 	private Vertex[] vertices;
 	
-	protected RoadNetwork() {}
-	
-	public static RoadNetwork getInstance() {
-		if (instance == null) {
-			instance = new RoadNetwork();
-			instance.constructRoadNetwork();
-		}
-		return instance;
+	public RoadNetwork() {
+		constructRoadNetwork();
 	}
 	
 	/**
@@ -65,7 +58,13 @@ public class RoadNetwork {
 		}
 		return null;
 	}
-	
-	
+
+	public Vertex[] getVertices() {
+		return vertices;
+	}
+
+	public void setVertices(Vertex[] vertices) {
+		this.vertices = vertices;
+	}
 	
 }

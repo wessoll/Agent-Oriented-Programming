@@ -13,13 +13,14 @@ public class TomTom {
 	private List<Vertex> currentRoute;
 	private Edge currentEdge;
 	
-	private static RoadNetwork roadnetwork;
+	private RoadNetwork roadnetwork;
 	
 	public TomTom(){
 		currentRoute = new ArrayList<Vertex>();
 		currentEdge = null;
 		
-		this.roadnetwork = RoadNetwork.getInstance();
+		// Create a copy of the RoadNetwork with the basic weights, so we can modify the weights ourselfs
+		this.roadnetwork = new RoadNetwork();
 	}
 	
 	public void plotRoute(Vertex source, Vertex destination) {
@@ -95,12 +96,12 @@ public class TomTom {
 		this.currentRoute = currentRoute;
 	}
 
-	public static RoadNetwork getRoadnetwork() {
+	public RoadNetwork getRoadnetwork() {
 		return roadnetwork;
 	}
 
-	public static void setRoadnetwork(RoadNetwork roadnetwork) {
-		TomTom.roadnetwork = roadnetwork;
+	public void setRoadnetwork(RoadNetwork roadnetwork) {
+		this.roadnetwork = roadnetwork;
 	}
 
 	public Edge getCurrentEdge() {
