@@ -1,9 +1,8 @@
 package models;
 
-import interfaces.Vehicle;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * This class represents a line between two Vertices
@@ -11,12 +10,11 @@ import java.util.List;
  *
  */
 public class Edge {
-	private boolean hasObstacle = false;
-	private static List<Vehicle> cars; // The Cars that are on this lane (the same for every car)
+
+	private static List<BaseCar> cars; // The Cars that are on this lane (the same for every car)
 	private boolean isClosed = false;
 	private int speedLimit = 120;
 	private int id;
-	private boolean closed;
 	
 	public final Vertex destination;
 	public double weight;
@@ -27,25 +25,25 @@ public class Edge {
 	 * @param weight					The weight for this path
 	 */
 	public Edge(Vertex destination, double weight, int id) {
-		this.cars = new ArrayList<Vehicle>();
+		this.cars = new ArrayList<BaseCar>();
 		this.id = id;
 		this.destination = destination;
 		this.weight = weight;
 	}
 
-	public List<Vehicle> getCars() {
+	public List<BaseCar> getCars() {
 		return cars;
 	}
 
-	public void setCars(List<Vehicle> cars) {
+	public void setCars(List<BaseCar> cars) {
 		Edge.cars = cars;
 	}
 
-	public void addCar(Vehicle car) {
+	public void addCar(BaseCar car) {
 		Edge.cars.add(car);
 	}
 	
-	public void removeCar(Vehicle car) {
+	public void removeCar(BaseCar car) {
 		Edge.cars.remove(car);
 	}
 	
@@ -76,22 +74,4 @@ public class Edge {
 	public double getWeight() {
 		return weight;
 	}
-
-	public boolean isClosed() {
-		return isClosed;
-	}
-
-	public void setClosed(boolean isClosed) {
-		this.isClosed = isClosed;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-	
-	
 }

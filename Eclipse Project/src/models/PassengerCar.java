@@ -1,12 +1,15 @@
 package models;
 
+
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
+import behaviours.DriveBehavior;
 
-public class PassengerCar extends BaseCar {
-
-	public PassengerCar(){
-		super();
+public class PassengerCar extends Car{
+	private static final long serialVersionUID = 8962335670763104350L;
+	
+	public PassengerCar(Vertex starting_point, Vertex destination, int speed, int identifier){
+		super(starting_point, destination, speed, "Passenger_" + identifier);
 		
 		// For test purposes we want to take a travel from Den Haag to Groningen
 		getNavigation().plotRoute(
