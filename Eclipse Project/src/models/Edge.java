@@ -14,6 +14,7 @@ public class Edge {
 	private boolean isClosed = false;
 	private int speedLimit = 120;
 	private int id;
+	private boolean closed;
 	
 	public final Vertex destination;
 	public double weight;
@@ -73,4 +74,22 @@ public class Edge {
 	public double getWeight() {
 		return weight;
 	}
+
+	public boolean isClosed() {
+		return isClosed;
+	}
+
+	public void setClosed(boolean isClosed) {
+		this.isClosed = isClosed;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	
 }
