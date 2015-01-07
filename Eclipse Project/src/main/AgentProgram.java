@@ -33,6 +33,16 @@ public class AgentProgram {
         			"Bono Mobiel", 
         			"models.PassengerCar", 
         			null); 
+        	
+        	mainContainer.createNewAgent(
+        			"Toyota", 
+        			"models.PassengerCar", 
+        			null);
+        	
+        	mainContainer.createNewAgent(
+        			"Volkswagen",
+        			"models.PassengerCar",
+        			null);
         	     
         	// Start Agent
         	agentController.start();

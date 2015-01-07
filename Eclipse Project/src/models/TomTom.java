@@ -10,20 +10,19 @@ import java.util.PriorityQueue;
  *
  */
 public class TomTom {
-	private Vertex currentSource;
-	private Vertex currentDestination;
 	private List<Vertex> currentRoute;
+	private Edge currentEdge;
 	
 	private static RoadNetwork roadnetwork;
 	
 	public TomTom(){
+		currentRoute = new ArrayList<Vertex>();
+		currentEdge = null;
+		
 		this.roadnetwork = RoadNetwork.getInstance();
 	}
 	
 	public void plotRoute(Vertex source, Vertex destination) {
-		this.currentSource = source;
-		this.currentDestination = destination;
-		
 		this.computePaths(source);
 		this.currentRoute = this.getShortestPathTo(destination);
 	}
@@ -88,22 +87,6 @@ public class TomTom {
 	 * Getters/Setters
 	 */
 
-	public Vertex getCurrentSource() {
-		return currentSource;
-	}
-
-	public void setCurrentSource(Vertex currentSource) {
-		this.currentSource = currentSource;
-	}
-
-	public Vertex getCurrentDestination() {
-		return currentDestination;
-	}
-
-	public void setCurrentDestination(Vertex currentDestination) {
-		this.currentDestination = currentDestination;
-	}
-
 	public List<Vertex> getCurrentRoute() {
 		return currentRoute;
 	}
@@ -118,6 +101,14 @@ public class TomTom {
 
 	public static void setRoadnetwork(RoadNetwork roadnetwork) {
 		TomTom.roadnetwork = roadnetwork;
+	}
+
+	public Edge getCurrentEdge() {
+		return currentEdge;
+	}
+
+	public void setCurrentEdge(Edge currentEdge) {
+		this.currentEdge = currentEdge;
 	}
 	
 	
