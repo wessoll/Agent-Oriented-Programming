@@ -1,19 +1,17 @@
 package models;
 import jade.core.Agent;
+import java.util.UUID;
 
-public abstract class Car extends Agent implements interfaces.Vehicle{
-	private static final long serialVersionUID = -18530235733015824L;
+public abstract class Car extends Agent implements interfaces.Vehicle {
+
 	protected int speed;
 	protected String identifier;
-	protected Vertex starting_point;
-	protected Vertex destination;
 	protected TomTom navigation;
 	
-	public Car(Vertex starting_point, Vertex destination, int speed, String identifier){
-		this.starting_point = starting_point;
-		this.destination = destination;
+	public Car(int speed){
 		this.speed = speed;
-		this.identifier = identifier;
+		this.identifier = UUID.randomUUID().toString();
+		
 		navigation = new TomTom();
 	}
 	

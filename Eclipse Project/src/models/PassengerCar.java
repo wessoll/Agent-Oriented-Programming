@@ -8,8 +8,8 @@ import behaviours.DriveBehavior;
 public class PassengerCar extends Car{
 	private static final long serialVersionUID = 8962335670763104350L;
 	
-	public PassengerCar(Vertex starting_point, Vertex destination, int speed, int identifier){
-		super(starting_point, destination, speed, "Passenger_" + identifier);
+	public PassengerCar(int speed){
+		super(speed);
 		
 		// For test purposes we want to take a travel from Den Haag to Groningen
 		getNavigation().plotRoute(
