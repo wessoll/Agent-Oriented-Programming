@@ -1,5 +1,8 @@
 package models;
 
+import jade.core.behaviours.CyclicBehaviour;
+import jade.lang.acl.ACLMessage;
+
 public class PassengerCar extends BaseCar {
 
 	public PassengerCar(){
@@ -21,6 +24,18 @@ public class PassengerCar extends BaseCar {
 		addBehaviour(new DriveBehavior(this) {
 		      protected void handleElapsedTimeout() {
 		    	  // nop
-		      }});
+		      }
+		});
+		
+		// Add a behavior which handles received messages
+		addBehaviour(new CyclicBehaviour(this) {
+				public void action() {
+					ACLMessage message = receive();
+					if (message != null) {
+						System.out.println("Received new Message");
+		                block();
+					}
+				}
+		});	
 	}
 }

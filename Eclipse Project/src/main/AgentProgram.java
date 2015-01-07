@@ -30,21 +30,6 @@ public class AgentProgram {
        try {
     	   // Create the Agent
         	AgentController agentController = mainContainer.createNewAgent(
-        			"Bono Mobiel", 
-        			"models.PassengerCar", 
-        			null); 
-        	
-        	mainContainer.createNewAgent(
-        			"Toyota", 
-        			"models.PassengerCar", 
-        			null);
-        	
-        	mainContainer.createNewAgent(
-        			"Volkswagen",
-        			"models.PassengerCar",
-        			null);
-        	     
-        	mainContainer.createNewAgent(
         			"MaxtrixUtrechtGroningen", 
         			"models.MatrixBoard", 
         			null);

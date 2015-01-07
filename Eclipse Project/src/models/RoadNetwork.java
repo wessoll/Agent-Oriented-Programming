@@ -7,15 +7,12 @@ import jade.core.Agent;
 import jade.lang.acl.ACLMessage;
 
 /**
- * This is the "God" class which maintains the Road Network (all roads)
+ * This Agent holds the most recent map and sends it on request
  * @author wesley
  *
  */
 public class RoadNetwork extends Agent {
 	private Vertex[] vertices;
-	
-	private int id;
-	private boolean isClosed;
 	
 	public RoadNetwork() {
 		constructRoadNetwork();
@@ -28,7 +25,7 @@ public class RoadNetwork extends Agent {
 	/**
 	 * Creates a new Road Network by linking vertices with each other
 	 */
-	public void constructRoadNetwork() {
+	private void constructRoadNetwork() {
 		Vertex denHelder = new Vertex("Den Helder");
 		Vertex groningen = new Vertex("Groningen");
 		Vertex amsterdam = new Vertex("Amsterdam");
@@ -60,10 +57,14 @@ public class RoadNetwork extends Agent {
 				new Edge(amsterdam, 90, 14)
 		});
 		
-		
 		this.vertices = new Vertex[]{denHelder, groningen, amsterdam, utrecht, denHaag};
 	}
 
+	/**
+	 * Returns a Vertex by it's name
+	 * @param name									Name of the Vertex
+	 * @return
+	 */
 	public Vertex getVertex(String name) {
 		for(Vertex vertex : this.vertices) {
 			if (vertex.getName().equals(name)) {
@@ -72,11 +73,12 @@ public class RoadNetwork extends Agent {
 		}
 		return null;
 	}
-
-	public Vertex[] getVertices() {
-		return vertices;
-	}
 	
+	/**
+	 * Updates the RoadNetwork with a closed or open edge
+	 * @param edgeId								ID of the Edge to update
+	 * @param isClosed								Whether or not the Edge is open/closed
+	 */
 	private void updateRoadNetwork(int edgeId, boolean isClosed) {
 		// Find the Edge corresponding with the edgeId
 		for(Vertex vertice : this.vertices) {
@@ -87,20 +89,5 @@ public class RoadNetwork extends Agent {
 				}
 			}
 		}
-	}
-	
-	public void recieveMessage(){
-		ACLMessage msg = receive();
-		if (msg != null){
-			System.out.println("Herberekenen van route!");
-			String message = msg.getContent();
-			String[] infoList = message.split(", ");
-			this.id = Integer.parseInt(infoList[0]);
-			this.isClosed = Boolean.parseBoolean(infoList[1]);
-		}
-		else{
-			
-		}
-			
 	}
 }
