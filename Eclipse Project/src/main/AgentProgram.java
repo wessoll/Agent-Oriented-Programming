@@ -44,6 +44,10 @@ public class AgentProgram {
         			"models.PassengerCar",
         			null);
         	     
+        	mainContainer.createNewAgent(
+        			"MaxtrixUtrechtGroningen", 
+        			"models.MatrixBoard", 
+        			null);
         	// Start Agent
         	agentController.start();
 

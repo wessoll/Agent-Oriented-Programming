@@ -1,5 +1,6 @@
 package models;
 import jade.core.Agent;
+import jade.lang.acl.ACLMessage;
 
 public abstract class BaseCar extends Agent implements interfaces.IVehicle {
 	protected int speed;
@@ -28,5 +29,14 @@ public abstract class BaseCar extends Agent implements interfaces.IVehicle {
 		this.navigation = navigation;
 	}
 	
-	
+	public void recieveMessage(){
+		ACLMessage msg = receive();
+		if (msg != null){
+			System.out.println("Herberekenen van route!");
+		}
+		else{
+			
+		}
+			
+	}
 }
