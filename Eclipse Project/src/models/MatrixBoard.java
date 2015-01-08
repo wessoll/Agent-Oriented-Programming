@@ -35,7 +35,7 @@ public class MatrixBoard extends Agent {
 			public void action() {
 				MatrixBoard matrixBoard = (MatrixBoard)this.myAgent;
 				
-				matrixBoard.closeRoad(1, true);
+				matrixBoard.closeRoad(9, false);
 			}
 		});	
 	}
@@ -44,9 +44,10 @@ public class MatrixBoard extends Agent {
 		System.out.println("Sending out Message");
 		
 		ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
-	    msg.setContent(edge_id + ", " + closed);
+	    msg.setContent(edge_id + "," + closed);
+	    msg.setOntology("ClosedRoad");
 	    
-	    msg.addReceiver(new AID("Volkswagen", AID.ISLOCALNAME));
+	    msg.addReceiver(new AID("InfoAgent", AID.ISLOCALNAME));
 	    
 	    send(msg);
 	}

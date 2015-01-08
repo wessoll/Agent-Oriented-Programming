@@ -1,4 +1,5 @@
 package models;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
@@ -7,7 +8,7 @@ import java.util.ArrayList;
  * @author wesley
  *
  */
-public class Vertex implements Comparable<Vertex> {
+public class Vertex implements Comparable<Vertex>, Serializable {
 
 	private String name;
 	private Edge[] adjacencies = new Edge[]{};

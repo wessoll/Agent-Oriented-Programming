@@ -1,5 +1,6 @@
 package models;
 
+import exceptions.UnknownMessageException;
 import jade.core.Agent;
 import jade.lang.acl.ACLMessage;
 import jade.core.behaviours.CyclicBehaviour;
@@ -12,7 +13,7 @@ import jade.core.behaviours.CyclicBehaviour;
 public class RoadNetwork extends Agent {
 	private static final long serialVersionUID = 1381214470907052019L;
 
-	private Vertex[] vertices;
+	private Vertex[] roadMap;
 	
 	public RoadNetwork() {
 		constructRoadNetwork();
@@ -22,11 +23,53 @@ public class RoadNetwork extends Agent {
 		// Add a behavior which handles received messages
 		addBehaviour(new CyclicBehaviour(this) {
 			public void action() {
-				ACLMessage message = receive();
-                if (message != null) {
-                    System.out.println("Received new Message");
-                	block();
-                }
+				try {
+					ACLMessage message = receive();
+	                if (message != null) {
+	                	System.out.println("Received new Message");
+	                	
+	                	RoadNetwork thisRoadNetwork = (RoadNetwork)this.myAgent;
+	                	
+	                	/**
+	                	 * Road Closed/Open Message
+	                	 */
+	                	if (message.getOntology().equals("ClosedRoad")) {
+	                		System.out.println("New Closed Road message");
+	                		
+	                		String[] parameters = message.getContent().split(",");
+	                		
+	                		if (parameters.length != 2) {
+	                			throw new UnknownMessageException("Invalid parameter length");
+	                		}
+	                		
+	                		int edgeId = Integer.parseInt(parameters[0]);
+	                		boolean isClosed = (parameters[1].equals("true") ? true : false);
+	                		
+	                		// Update the RoadMap Template with this new data
+	                		updateRoadNetwork(edgeId, isClosed);
+	                	}   
+	                	
+	                	/**
+	                	 * Request for RoadMap Message
+	                	 */
+	                	else if (message.getOntology().equals("RoadMap")) {
+	                		System.out.println("New Request for RoadMap message");
+	                		
+	                		// return the Road Map
+	                		ACLMessage replyMessage = message.createReply();
+	                		replyMessage.setPerformative(ACLMessage.INFORM);
+	                		replyMessage.setOntology("RoadMap");
+	                		replyMessage.setContentObject(thisRoadNetwork.getRoadMap());
+	                		send(replyMessage);
+	                		
+	                		System.out.println("Returning RoadMap");
+	                	}
+	                	
+	                	block();
+	                }
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		});	
 	}
@@ -66,21 +109,7 @@ public class RoadNetwork extends Agent {
 				new Edge(amsterdam, 90, 14)
 		});
 		
-		this.vertices = new Vertex[]{denHelder, groningen, amsterdam, utrecht, denHaag};
-	}
-
-	/**
-	 * Returns a Vertex by it's name
-	 * @param name									Name of the Vertex
-	 * @return
-	 */
-	public Vertex getVertex(String name) {
-		for(Vertex vertex : this.vertices) {
-			if (vertex.getName().equals(name)) {
-				return vertex;
-			}
-		}
-		return null;
+		this.roadMap = new Vertex[]{denHelder, groningen, amsterdam, utrecht, denHaag};
 	}
 	
 	/**
@@ -90,7 +119,7 @@ public class RoadNetwork extends Agent {
 	 */
 	private void updateRoadNetwork(int edgeId, boolean isClosed) {
 		// Find the Edge corresponding with the edgeId
-		for(Vertex vertice : this.vertices) {
+		for(Vertex vertice : this.roadMap) {
 			for(Edge edge : vertice.getAdjacencies()) {
 				if (edge.getId() == edgeId) {
 					edge.setClosed(isClosed);
@@ -99,5 +128,11 @@ public class RoadNetwork extends Agent {
 			}
 		}
 	}
+
+	public Vertex[] getRoadMap() {
+		return roadMap;
+	}
+	
+	
 	
 }

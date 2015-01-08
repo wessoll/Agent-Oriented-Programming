@@ -1,5 +1,1 @@
-<<<<<<< HEAD
-http://10.0.1.2:7778/acc
-=======
-http://192.168.178.17:7778/acc
->>>>>>> branch 'master' of https://github.com/wscheper/Agent-Oriented-Programming.git
+http://10.0.1.5:7778/acc

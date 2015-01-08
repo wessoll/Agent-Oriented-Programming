@@ -1,4 +1,11 @@
 package models;
+import jade.core.AID;
+import jade.core.Agent;
+import jade.core.behaviours.CyclicBehaviour;
+import jade.core.behaviours.OneShotBehaviour;
+import jade.lang.acl.ACLMessage;
+import jade.lang.acl.UnreadableException;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -10,26 +17,20 @@ import java.util.PriorityQueue;
  *
  */
 public class TomTom {
-	private List<Vertex> currentRoute;
-	private Edge currentEdge;
 	
-	private RoadNetwork roadnetwork;
+	private List<Vertex> currentRoute; // Plotted route (null if none)
+	private Edge currentEdge; // Edge where we stand on
+	private Vertex[] roadMap; // The roadmap
+
 	
-	public TomTom(){
+	public TomTom() {
 		currentRoute = new ArrayList<Vertex>();
 		currentEdge = null;
-		
-		// Create a copy of the RoadNetwork with the basic weights, so we can modify the weights ourselfs
-		this.roadnetwork = new RoadNetwork();
 	}
 	
 	public void plotRoute(Vertex source, Vertex destination) {
 		this.computePaths(source);
 		this.currentRoute = this.getShortestPathTo(destination);
-	}
-	
-	public void printCurrentRoute() {
-		System.out.println("Current Route: " + currentRoute);
 	}
 	
 	/**
@@ -83,10 +84,28 @@ public class TomTom {
 		
 		return path;
 	}
-	
+
 	/**
-	 * Getters/Setters
+	 * Returns a Vertex by it's name
+	 * @param name									Name of the Vertex
+	 * @return
 	 */
+	public Vertex getVertex(String name) {
+		for(Vertex vertex : this.roadMap) {
+			if (vertex.getName().equals(name)) {
+				return vertex;
+			}
+		}
+		return null;
+	}
+
+	public Vertex[] getRoadMap() {
+		return roadMap;
+	}
+
+	public void setRoadMap(Vertex[] roadMap) {
+		this.roadMap = roadMap;
+	}
 
 	public List<Vertex> getCurrentRoute() {
 		return currentRoute;
@@ -96,14 +115,6 @@ public class TomTom {
 		this.currentRoute = currentRoute;
 	}
 
-	public RoadNetwork getRoadnetwork() {
-		return roadnetwork;
-	}
-
-	public void setRoadnetwork(RoadNetwork roadnetwork) {
-		this.roadnetwork = roadnetwork;
-	}
-
 	public Edge getCurrentEdge() {
 		return currentEdge;
 	}
@@ -111,6 +122,7 @@ public class TomTom {
 	public void setCurrentEdge(Edge currentEdge) {
 		this.currentEdge = currentEdge;
 	}
+	
 	
 	
 }

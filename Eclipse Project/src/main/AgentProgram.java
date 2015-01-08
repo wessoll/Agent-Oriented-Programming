@@ -28,16 +28,17 @@ public class AgentProgram {
         ContainerController mainContainer = rt.createMainContainer(defaultProfile);
  
        try {
-    	   // Create the Agent
-        	AgentController agentController = mainContainer.createNewAgent(
-        			"MaxtrixUtrechtGroningen", 
-        			"models.MatrixBoard", 
-        			null);
+    	   // Create the Agents
+        	AgentController agentController = mainContainer.createNewAgent("InfoAgent", "models.RoadNetwork", null);
+        	AgentController agentController2 = mainContainer.createNewAgent("Auto", "models.PassengerCar",  null);
+        	
         	// Start Agent
         	agentController.start();
+        	agentController2.start();
 
        } catch (StaleProxyException e) {
 			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 	}
 }

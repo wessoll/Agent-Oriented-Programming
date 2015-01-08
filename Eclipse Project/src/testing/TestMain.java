@@ -16,7 +16,7 @@ public class TestMain {
 
 	public static void main(String[] args) {
 		
-		Vehicle bonoMobiel = new PassengerCar(120);
+		/*Vehicle bonoMobiel = new PassengerCar(120);
 		bonoMobiel.setSpeed(300);
 
 		// Plot a course
@@ -24,6 +24,6 @@ public class TestMain {
 				bonoMobiel.getNavigation().getRoadnetwork().getVertex("Amsterdam"), 
 				bonoMobiel.getNavigation().getRoadnetwork().getVertex("Groningen"));
 		
-		bonoMobiel.getNavigation().printCurrentRoute();		
+		bonoMobiel.getNavigation().printCurrentRoute();		*/
 	}
 }

@@ -2,6 +2,7 @@ package models;
 
 import interfaces.Vehicle;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +11,7 @@ import java.util.List;
  * @author wesley
  *
  */
-public class Edge {
+public class Edge implements Serializable {
 	private boolean hasObstacle = false;
 	private static List<Vehicle> cars; // The Cars that are on this lane (the same for every car)
 	private boolean isClosed = false;
