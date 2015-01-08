@@ -16,7 +16,7 @@ public class TestMain {
 
 	public static void main(String[] args) {
 		
-		Vehicle bonoMobiel = new PassengerCar(new Vertex(""), new Vertex(""), 120, 1);
+		Vehicle bonoMobiel = new PassengerCar(120);
 		bonoMobiel.setSpeed(300);
 
 		// Plot a course

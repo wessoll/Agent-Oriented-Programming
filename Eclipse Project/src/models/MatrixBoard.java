@@ -6,7 +6,6 @@ import jade.core.behaviours.CyclicBehaviour;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
 
-<<<<<<< HEAD
 public class MatrixBoard extends Agent {
 	
 	/**

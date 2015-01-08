@@ -2,6 +2,7 @@ package models;
 
 import jade.core.Agent;
 import jade.lang.acl.ACLMessage;
+import jade.core.behaviours.CyclicBehaviour;
 
 /**
  * This Agent holds the most recent map and sends it on request
