@@ -17,6 +17,7 @@ public abstract class Car extends Agent implements interfaces.Vehicle {
 	protected int speed;
 	protected String identifier;
 	protected TomTom navigation;
+	private int piority = 1;
 	
 	public Car() {
 		this.speed = 120;
@@ -79,5 +80,9 @@ public abstract class Car extends Agent implements interfaces.Vehicle {
 	
 	public void setNavigation(TomTom navigation) {
 		this.navigation = navigation;
+	}
+
+	public int getPiority() {
+		return piority;
 	}
 }

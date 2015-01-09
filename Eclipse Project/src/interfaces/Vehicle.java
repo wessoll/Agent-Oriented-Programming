@@ -7,4 +7,5 @@ public interface Vehicle {
 	public TomTom getNavigation();
 	public void setSpeed(int speed);
 	public int getSpeed();
+	public int getPiority();
 }

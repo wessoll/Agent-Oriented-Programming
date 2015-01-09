@@ -1,6 +1,5 @@
 package models;
 
-import exceptions.UnknownMessageException;
 import jade.core.Agent;
 import jade.lang.acl.ACLMessage;
 import jade.core.behaviours.CyclicBehaviour;
@@ -39,7 +38,7 @@ public class RoadNetwork extends Agent {
 	                		String[] parameters = message.getContent().split(",");
 	                		
 	                		if (parameters.length != 2) {
-	                			throw new UnknownMessageException("Invalid parameter length");
+	                			throw new Exception("Invalid parameter length");
 	                		}
 	                		
 	                		int edgeId = Integer.parseInt(parameters[0]);
@@ -85,28 +84,28 @@ public class RoadNetwork extends Agent {
 		Vertex denHaag = new Vertex("Den Haag");
 		
 		amsterdam.setAdjacencies(new Edge[] {
-				new Edge(denHelder, 90, 1),
-				new Edge(groningen, 200, 2),
-				new Edge(utrecht, 40, 3),
-				new Edge(denHaag, 65, 4)
+				new Edge(denHelder, 90, 1, 40),
+				new Edge(groningen, 200, 2, 60),
+				new Edge(utrecht, 40, 3, 20),
+				new Edge(denHaag, 65, 4, 20)
 		});
 		groningen.setAdjacencies(new Edge[] {
-				new Edge(denHelder, 155, 5),
-				new Edge(amsterdam, 200, 6),
-				new Edge(utrecht, 195, 7)
+				new Edge(denHelder, 155, 5, 100),
+				new Edge(amsterdam, 200, 6, 60),
+				new Edge(utrecht, 195, 7, 40)
 		});
 		utrecht.setAdjacencies(new Edge[] {
-				new Edge(denHaag, 65, 8),
-				new Edge(amsterdam, 40, 9),
-				new Edge(groningen, 195, 10)
+				new Edge(denHaag, 65, 8, 20),
+				new Edge(amsterdam, 40, 9, 20),
+				new Edge(groningen, 195, 10, 40)
 		});		
 		denHaag.setAdjacencies(new Edge[] {
-				new Edge(amsterdam, 65, 11),
-				new Edge(utrecht, 65, 12)
+				new Edge(amsterdam, 65, 11, 20),
+				new Edge(utrecht, 65, 12, 20)
 		});
 		denHelder.setAdjacencies(new Edge[] {
-				new Edge(groningen, 155, 13),
-				new Edge(amsterdam, 90, 14)
+				new Edge(groningen, 155, 13, 100),
+				new Edge(amsterdam, 90, 14, 40)
 		});
 		
 		this.roadMap = new Vertex[]{denHelder, groningen, amsterdam, utrecht, denHaag};
