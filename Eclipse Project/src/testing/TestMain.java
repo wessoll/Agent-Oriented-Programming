@@ -1,8 +1,8 @@
 package testing;
 
-import interfaces.Vehicle;
+import interfaces.iVehicle;
 import jade.core.Agent;
-import models.Car;
+import models.BaseCar;
 import models.PassengerCar;
 import models.RoadNetwork;
 import models.Vertex;

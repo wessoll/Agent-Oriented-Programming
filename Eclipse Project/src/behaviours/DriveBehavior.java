@@ -1,9 +1,9 @@
 package behaviours;
 
-import models.Car;
+import models.BaseCar;
 import models.Edge;
 import models.Vertex;
-import interfaces.Vehicle;
+import interfaces.iVehicle;
 import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
 
@@ -28,7 +28,7 @@ public class DriveBehavior extends Behaviour {
 	@Override
 	public void action() {
 		// @todo move the car forward one place
-		Vehicle car = (Vehicle)this.myAgent; // Parse the Agent to Vehicle so we can use the Vehicle operations
+		iVehicle car = (iVehicle)this.myAgent; // Parse the Agent to Vehicle so we can use the Vehicle operations
 
 		// Determine which edge to drive on
 		Vertex nextVertex = (car.getNavigation().getCurrentRoute().size() > 1) ? car.getNavigation().getCurrentRoute().get(1) : null; // Get next Vertex (if any)
@@ -65,7 +65,7 @@ public class DriveBehavior extends Behaviour {
 	 */
 	@Override
 	public boolean done() {
-		Car car = (Car)this.myAgent;
+		BaseCar car = (BaseCar)this.myAgent;
 		
 		return car.getNavigation().getCurrentRoute().isEmpty(); // if Car has no route anymore (i.e. reached it's destination)	
 	}	

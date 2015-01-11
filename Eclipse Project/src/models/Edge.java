@@ -1,6 +1,6 @@
 package models;
 
-import interfaces.Vehicle;
+import interfaces.iVehicle;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -15,17 +15,16 @@ import java.util.Queue;
  *
  */
 public class Edge implements Serializable {
-	private boolean hasObstacle = false;
-	//private static List<Vehicle> cars; // The Cars that are on this lane (the same for every car)
-	private boolean isClosed = false;
-	private int speedLimit = 120;
-	private int id;
-	private boolean closed;
-	
-	private static Queue lane; // The Cars that are on this lane (the same for every car)
-	
 	public final Vertex destination;
-	public double weight;
+	
+	/**
+	 * Road Characteristics
+	 */
+	private int id;
+	private boolean isClosed 		= false;
+	private int speedLimit 			= 120;
+	private double weight; // @todo, this is now the same for every car, but should be made unique
+	private Queue<iVehicle> lane;
 	
 	/**
 	 * Constructor
@@ -33,27 +32,28 @@ public class Edge implements Serializable {
 	 * @param weight					The weight for this path
 	 */
 	public Edge(Vertex destination, double weight, int id, int capacity ) {
-		Comparator<Vehicle> comparator = new PriorityComparator();
-		Edge.lane = new PriorityQueue<Vehicle>(capacity, comparator); 
+		Comparator<iVehicle> comparator = new PriorityComparator();
+		this.lane = new PriorityQueue<iVehicle>(capacity, comparator); 
+		
 		this.id = id;
 		this.destination = destination;
 		this.weight = weight;
 	}
 
-	public Queue<Vehicle> getCars() {
+	public Queue<iVehicle> getCars() {
 		return lane;
 	}
 
-	public void setCars(Queue<Vehicle> cars) {
-		Edge.lane = cars;
+	public void setCars(Queue<iVehicle> cars) {
+		this.lane = cars;
 	}
 
-	public void addCar(Vehicle car) {
-		Edge.lane.add(car);
+	public void addCar(iVehicle car) {
+		this.lane.add(car);
 	}
 	
-	public void removeCar(Vehicle car) {
-		Edge.lane.remove(car);
+	public void removeCar(iVehicle car) {
+		this.lane.remove(car);
 	}
 	
 	public int laneSize(){
@@ -103,8 +103,4 @@ public class Edge implements Serializable {
 	public void setId(int id) {
 		this.id = id;
 	}
-	
-	
 }
-
-

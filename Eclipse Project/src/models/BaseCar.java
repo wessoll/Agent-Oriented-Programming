@@ -8,7 +8,7 @@ import jade.lang.acl.UnreadableException;
 
 import java.util.UUID;
 
-public abstract class Car extends Agent implements interfaces.Vehicle {
+public abstract class BaseCar extends Agent implements interfaces.iVehicle {
 
 	/**
 	 * 
@@ -17,9 +17,9 @@ public abstract class Car extends Agent implements interfaces.Vehicle {
 	protected int speed;
 	protected String identifier;
 	protected TomTom navigation;
-	private int piority = 1;
+	private int priority = 1;
 	
-	public Car() {
+	public BaseCar() {
 		this.speed = 120;
 		this.identifier = UUID.randomUUID().toString();
 		
@@ -32,15 +32,14 @@ public abstract class Car extends Agent implements interfaces.Vehicle {
 			public void action() {
 				ACLMessage message = receive();
                 if (message != null) {
-                    System.out.println("Received new Message");
                     
-                    Car thisCar = (Car)this.myAgent;
+                    BaseCar thisCar = (BaseCar)this.myAgent;
                     
-                    if (message.getOntology().equals("RoadMap")) {
+                    if (message.getOntology().equals("RoadMap")) { // A RoadMap has been received
                     	  try {
-                    		  thisCar.getNavigation().setRoadMap((Vertex[])message.getContentObject());
+                    		  Vertex[] roadMap = (Vertex[])message.getContentObject();
+                    		  thisCar.getNavigation().setRoadMap(roadMap);
                     		  
-                    		  System.out.println("Received RoadMap");
 						} catch (UnreadableException e) {
 							e.printStackTrace();
 						}
@@ -61,7 +60,6 @@ public abstract class Car extends Agent implements interfaces.Vehicle {
 				message.addReceiver(new AID("InfoAgent", AID.ISLOCALNAME));
 			    
 			    send(message);
-			    System.out.println("Request for RoadMap has been made");
 			}
 		});
 	}
@@ -82,7 +80,7 @@ public abstract class Car extends Agent implements interfaces.Vehicle {
 		this.navigation = navigation;
 	}
 
-	public int getPiority() {
-		return piority;
+	public int getPriority() {
+		return priority;
 	}
 }

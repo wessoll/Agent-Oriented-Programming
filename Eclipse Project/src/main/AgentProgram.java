@@ -30,11 +30,18 @@ public class AgentProgram {
        try {
     	   // Create the Agents
         	AgentController agentController = mainContainer.createNewAgent("InfoAgent", "models.RoadNetwork", null);
-        	AgentController agentController2 = mainContainer.createNewAgent("Auto", "models.PassengerCar",  null);
+        	
+        	AgentController agentController2 = mainContainer.createNewAgent("Car A", "models.PassengerCar",  null);
+        	AgentController agentController3 = mainContainer.createNewAgent("Car B", "models.PassengerCar",  null);
+        	AgentController agentController4 = mainContainer.createNewAgent("Car C", "models.PassengerCar",  null);
+        	AgentController agentController5 = mainContainer.createNewAgent("Car D", "models.PassengerCar",  null);
         	
         	// Start Agent
         	agentController.start();
         	agentController2.start();
+        	agentController3.start();
+        	agentController4.start();
+        	agentController5.start();
 
        } catch (StaleProxyException e) {
 			e.printStackTrace();

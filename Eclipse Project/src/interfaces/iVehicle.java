@@ -2,10 +2,10 @@ package interfaces;
 
 import models.TomTom;
 
-public interface Vehicle {
+public interface iVehicle {
 	public void setNavigation(TomTom navigation);
 	public TomTom getNavigation();
 	public void setSpeed(int speed);
 	public int getSpeed();
-	public int getPiority();
+	public int getPriority();
 }

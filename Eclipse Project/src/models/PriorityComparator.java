@@ -1,19 +1,20 @@
 package models;
 
-import interfaces.Vehicle;
+import interfaces.iVehicle;
 
+import java.io.Serializable;
 import java.util.Comparator;
 
-public class PriorityComparator implements Comparator<Vehicle>{
+public class PriorityComparator implements Comparator<iVehicle>, Serializable {
 
 	@Override
-	public int compare(Vehicle o1, Vehicle o2) {
+	public int compare(iVehicle o1, iVehicle o2) {
 		// TODO Auto-generated method stub
-		if (o1.getPiority() < o2.getPiority())
+		if (o1.getPriority() < o2.getPriority())
         {
             return -1;
         }
-        if (o1.getPiority() > o2.getPiority())
+        if (o1.getPriority() > o2.getPriority())
         {
             return 1;
         }

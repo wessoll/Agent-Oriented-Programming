@@ -1,5 +1,7 @@
 package models;
 
+import java.io.IOException;
+
 import jade.core.Agent;
 import jade.lang.acl.ACLMessage;
 import jade.core.behaviours.CyclicBehaviour;
@@ -25,7 +27,6 @@ public class RoadNetwork extends Agent {
 				try {
 					ACLMessage message = receive();
 	                if (message != null) {
-	                	System.out.println("Received new Message");
 	                	
 	                	RoadNetwork thisRoadNetwork = (RoadNetwork)this.myAgent;
 	                	
@@ -33,7 +34,6 @@ public class RoadNetwork extends Agent {
 	                	 * Road Closed/Open Message
 	                	 */
 	                	if (message.getOntology().equals("ClosedRoad")) {
-	                		System.out.println("New Closed Road message");
 	                		
 	                		String[] parameters = message.getContent().split(",");
 	                		
@@ -52,16 +52,8 @@ public class RoadNetwork extends Agent {
 	                	 * Request for RoadMap Message
 	                	 */
 	                	else if (message.getOntology().equals("RoadMap")) {
-	                		System.out.println("New Request for RoadMap message");
-	                		
 	                		// return the Road Map
-	                		ACLMessage replyMessage = message.createReply();
-	                		replyMessage.setPerformative(ACLMessage.INFORM);
-	                		replyMessage.setOntology("RoadMap");
-	                		replyMessage.setContentObject(thisRoadNetwork.getRoadMap());
-	                		send(replyMessage);
-	                		
-	                		System.out.println("Returning RoadMap");
+	                		sendMessageForRoadMap(message);
 	                	}
 	                	
 	                	block();
@@ -71,6 +63,19 @@ public class RoadNetwork extends Agent {
 				}
 			}
 		});	
+	}
+	
+	/**
+	 * Sends a Message with the RoadMap to the requester
+	 * @param originalMessage						The Message with the original request
+	 * @throws IOException
+	 */
+	private void sendMessageForRoadMap(ACLMessage originalMessage) throws IOException {
+		ACLMessage replyMessage = originalMessage.createReply();
+		replyMessage.setPerformative(ACLMessage.INFORM);
+		replyMessage.setOntology("RoadMap");
+		replyMessage.setContentObject(getRoadMap());
+		send(replyMessage);
 	}
 	
 	/**
@@ -128,6 +133,11 @@ public class RoadNetwork extends Agent {
 		}
 	}
 
+	
+	/**
+	 * Getters/Setters
+	 */
+	
 	public Vertex[] getRoadMap() {
 		return roadMap;
 	}
