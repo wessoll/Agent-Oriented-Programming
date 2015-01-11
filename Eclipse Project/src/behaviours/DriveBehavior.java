@@ -5,6 +5,7 @@ import java.util.Queue;
 import models.BaseCar;
 import models.Edge;
 import models.Vertex;
+import models.World;
 import interfaces.iVehicle;
 import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
@@ -34,10 +35,14 @@ public class DriveBehavior extends Behaviour {
 		Vertex startVertex = car.getNavigation().getCurrentRoute().get(0);
 		Vertex nextVertex = (car.getNavigation().getCurrentRoute().size() > 1) ? car.getNavigation().getCurrentRoute().get(1) : null;
 		
+		// The World Edge is the Edge where all cars drive on (same reference)
+		Edge currentWorldEdge = World.getInstance().getEdgeById(car.getCurrentEdge().getId());
+					
 		if (nextVertex == null) { // We reached our destination
 			// Check if we can leave the lane
 			boolean didLeave = false;
-			for (Queue<iVehicle> lane : car.getCurrentEdge().getLanes()) {
+			
+			for (Queue<iVehicle> lane : currentWorldEdge.getLanes()) {
 				if (lane.peek() != null && lane.peek().equals(car)) { // Yes we can move!
 					// Remove our old location
 					car.getNavigation().getCurrentRoute().remove(0);
@@ -47,17 +52,19 @@ public class DriveBehavior extends Behaviour {
 						lane.poll();
 					}
 					car.setPreviousEdge(car.getCurrentEdge());
-					System.out.println("Destination Reached!");
+					car.setCurrentEdge(null);
+					System.out.println(this.myAgent.getName() + " - Destination Reached!");
+					
 					return;
 				}
 			}
-			System.out.println("We are stuck!");
+			System.out.println(this.myAgent.getName() + " - We are stuck!");
 			return;
 		}
-		
+		System.out.println(this.myAgent.getName() + " - about to move to " + nextVertex.getName());
 		// 1. Check if we can leave the road
 		boolean canLeave = false;
-		for (Queue<iVehicle> lane : car.getCurrentEdge().getLanes()) {
+		for (Queue<iVehicle> lane : currentWorldEdge.getLanes()) {
 			if (lane.peek() != null && lane.peek().equals(car)) { // Yes we can move!
 				boolean didMove = false;
 				// See if we can move forward
@@ -65,21 +72,29 @@ public class DriveBehavior extends Behaviour {
 					if (edge.getDestination().equals(nextVertex)) {
 						// See if there is any room on this Edge
 						if (!edge.isClosed()) {
-							for (Queue<iVehicle> futureLane : edge.getLanes()) {
+							Edge nextWorldEdge = World.getInstance().getEdgeById(edge.getId());
+							for (Queue<iVehicle> futureLane : nextWorldEdge.getLanes()) {
 								try {
+									if (futureLane.size() >= Edge.laneLimit) {
+										System.out.println(this.myAgent.getName() + "lane limit reached: " + futureLane.size());
+									
+										throw new IllegalStateException();
+									}
 									futureLane.add(car);
 									// Update TomTom
 									car.getNavigation().getCurrentRoute().remove(0);
 									
-									// Remove ourselves from the previous Edge/Lane
-									if (car.getPreviousEdge() != null) {
-										lane.poll();
-									}
-									car.setPreviousEdge(car.getCurrentEdge());
+									System.out.println(this.myAgent.getName() + "lane size: " + lane.size());
+									lane.poll();
+									System.out.println(this.myAgent.getName() +  "after size: " + lane.size());
 									
+									car.setPreviousEdge(car.getCurrentEdge());
+									car.setCurrentEdge(edge);
+									System.out.println(this.myAgent.getName() + " - New route: " + car.getNavigation().getCurrentRoute());
 									didMove = true;
 									break;
 								} catch (IllegalStateException e) { // There is no space!
+									System.out.println("Sorry, this lane is full!");
 									continue; // Check next lane
 								}
 							}
@@ -92,8 +107,6 @@ public class DriveBehavior extends Behaviour {
 				return; // No we cannot move!
 			}
 		}
-		
-		System.out.println("New position: " + car.getNavigation().getCurrentRoute());
 	}
 		
 	/**

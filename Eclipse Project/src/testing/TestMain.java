@@ -4,7 +4,7 @@ import interfaces.iVehicle;
 import jade.core.Agent;
 import models.BaseCar;
 import models.PassengerCar;
-import models.RoadNetwork;
+import models.InfoAgent;
 import models.Vertex;
 
 /**

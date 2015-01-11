@@ -6,6 +6,7 @@ import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.UnreadableException;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -16,7 +17,7 @@ import java.util.PriorityQueue;
  * @author wesley
  *
  */
-public class TomTom {
+public class TomTom implements Serializable {
 	
 	private List<Vertex> currentRoute; // Plotted route (null if none)
 	private Vertex[] roadMap; // The roadmap

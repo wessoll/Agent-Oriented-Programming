@@ -5,6 +5,7 @@ import interfaces.iVehicle;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
 import java.util.PriorityQueue;
@@ -27,27 +28,32 @@ public class Edge extends Observable implements Serializable {
 	private double weight; // @todo, this is now the same for every car, but should be made unique
 	private List<Queue<iVehicle>> lanes;
 	
+	public static int laneLimit = 2;
+	
 	/**
 	 * Constructor
 	 * @param destination				Where you want to go to
 	 * @param weight					The weight for this path
 	 */
 	public Edge(Vertex destination, double weight, int id) {
-		int lanes = 2; // @todo make this dynamic in future
+		int lanes = 1; // @todo make this dynamic in future
 		
 		this.lanes = new ArrayList<Queue<iVehicle>>();
 		for (int i=0;i<lanes;i++) { // Initialize the lanes
-			Comparator<iVehicle> comparator = new PriorityComparator();
+			//Comparator<iVehicle> comparator = new PriorityComparator();
 			
-			Queue<iVehicle> test = new PriorityQueue<iVehicle>(10);
-			this.lanes.add(new PriorityQueue<iVehicle>(10, comparator)); 
+			this.lanes.add(new LinkedList<iVehicle>()); 
 		}
 		
 		this.id = id;
 		this.destination = destination;
 		this.weight = weight;
+		
+		// Demonstration
+		if (id == 20) {
+			this.isClosed = true;
+		}
 	}
-
 
 	public int getSpeedLimit() {
 		return speedLimit;

@@ -7,17 +7,20 @@ import jade.lang.acl.ACLMessage;
 import jade.core.behaviours.CyclicBehaviour;
 
 /**
- * This Agent holds the most recent map and sends it on request
+ * This Agent holds a RoadMap with the latest information in it (e.g. closed road etc.) 
+ * 
+ * NOTE! the Vehicle's do not drive on the Road Map but on the world!
+ * 
  * @author wesley
  *
  */
-public class RoadNetwork extends Agent {
+public class InfoAgent extends Agent {
 	private static final long serialVersionUID = 1381214470907052019L;
 
 	private Vertex[] roadMap;
 	
-	public RoadNetwork() {
-		constructRoadNetwork();
+	public InfoAgent() {
+		this.roadMap = World.getInstance().getWorld();
 	}
 	
 	public void setup() {
@@ -27,8 +30,8 @@ public class RoadNetwork extends Agent {
 				try {
 					ACLMessage message = receive();
 	                if (message != null) {
-	                	
-	                	RoadNetwork thisRoadNetwork = (RoadNetwork)this.myAgent;
+	                	System.out.println(message.getSender().getName() + "Received Request");
+	                	InfoAgent thisRoadNetwork = (InfoAgent)this.myAgent;
 	                	
 	                	/**
 	                	 * Road Closed/Open Message
@@ -55,8 +58,6 @@ public class RoadNetwork extends Agent {
 	                		// return the Road Map
 	                		sendMessageForRoadMap(message);
 	                	}
-	                	
-	                	block();
 	                }
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -79,44 +80,6 @@ public class RoadNetwork extends Agent {
 	}
 	
 	/**
-	 * Creates a new Road Network by linking vertices with each other
-	 */
-	private void constructRoadNetwork() {
-		Vertex denHelder = new Vertex("Den Helder");
-		Vertex groningen = new Vertex("Groningen");
-		Vertex amsterdam = new Vertex("Amsterdam");
-		Vertex utrecht = new Vertex("Utrecht");
-		Vertex denHaag = new Vertex("Den Haag");
-		
-		amsterdam.setAdjacencies(new Edge[] {
-				new Edge(denHelder, 90, 1),
-				new Edge(groningen, 200, 2),
-				new Edge(utrecht, 40, 3),
-				new Edge(denHaag, 65, 4)
-		});
-		groningen.setAdjacencies(new Edge[] {
-				new Edge(denHelder, 155, 5),
-				new Edge(amsterdam, 200, 6),
-				new Edge(utrecht, 195, 7)
-		});
-		utrecht.setAdjacencies(new Edge[] {
-				new Edge(denHaag, 65, 8),
-				new Edge(amsterdam, 40, 9),
-				new Edge(groningen, 195, 10)
-		});		
-		denHaag.setAdjacencies(new Edge[] {
-				new Edge(amsterdam, 65, 11),
-				new Edge(utrecht, 65, 12)
-		});
-		denHelder.setAdjacencies(new Edge[] {
-				new Edge(groningen, 155, 13),
-				new Edge(amsterdam, 90, 14)
-		});
-		
-		this.roadMap = new Vertex[]{denHelder, groningen, amsterdam, utrecht, denHaag};
-	}
-	
-	/**
 	 * Updates the RoadNetwork with a closed or open edge
 	 * @param edgeId								ID of the Edge to update
 	 * @param isClosed								Whether or not the Edge is open/closed
@@ -133,7 +96,6 @@ public class RoadNetwork extends Agent {
 		}
 	}
 
-	
 	/**
 	 * Getters/Setters
 	 */
@@ -141,7 +103,4 @@ public class RoadNetwork extends Agent {
 	public Vertex[] getRoadMap() {
 		return roadMap;
 	}
-	
-	
-	
 }

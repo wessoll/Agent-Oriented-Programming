@@ -1,4 +1,5 @@
 package models;
+import interfaces.iVehicle;
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
@@ -6,7 +7,10 @@ import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.UnreadableException;
 
+import java.util.Queue;
 import java.util.UUID;
+
+import behaviours.DriveBehavior;
 
 public abstract class BaseCar extends Agent implements interfaces.iVehicle {
 
@@ -47,7 +51,7 @@ public abstract class BaseCar extends Agent implements interfaces.iVehicle {
 							e.printStackTrace();
 						}
                     }
-                	block();
+                	//block();
                 }
 			}
 		});	
@@ -65,7 +69,82 @@ public abstract class BaseCar extends Agent implements interfaces.iVehicle {
 			    send(message);
 			}
 		});
+		
+		// Add a behavior that plots a route once we have the RoadMap received @todo ofcourse this should be done in a better way
+		addBehaviour(new CyclicBehaviour(this) {
+			public void action() {
+				PassengerCar thisCar = (PassengerCar)this.myAgent;
+					
+				if (thisCar.getNavigation().getRoadMap() != null) {
+					System.out.println(this.myAgent.getName() + "start driving!");
+					// We can begin driving
+					try {
+						thisCar.plotRouteAndStartEngines();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					this.myAgent.removeBehaviour(this);
+				}
+			}
+		});
+
 	}
+	
+	// Utility method which plot's a route and starts the engines by following that route
+	protected void plotRouteAndStartEngines() throws Exception {
+			getNavigation().plotRoute(
+					getNavigation().getVertex("Den Haag"), 
+					getNavigation().getVertex("Duitsland"));
+			
+			System.out.println(this.getName() +  " - Route Plotted: " + getNavigation().getCurrentRoute());
+			
+			if (getNavigation().getCurrentRoute().size() < 2) {
+				throw new Exception("Route too small");
+			}
+			
+			// Place the car on the world
+			Vertex startVertex = getNavigation().getCurrentRoute().get(0);
+			Vertex nextVertex = getNavigation().getCurrentRoute().get(1);
+			Edge startEdge;
+			
+			boolean didMove = false;
+			for (Edge edge : startVertex.getAdjacencies()) {
+				if (edge.getDestination().equals(nextVertex)) {
+					// See if there is any room on this Edge
+					if (!edge.isClosed()) {
+						// The World Edge is the Edge where all cars drive on (same reference)
+						Edge worldEdge = World.getInstance().getEdgeById(edge.getId()); 
+
+						for (Queue<iVehicle> lane : worldEdge.getLanes()) {
+							try {
+								if (lane.size() >= Edge.laneLimit) {
+									throw new IllegalStateException();
+								}
+								lane.add(this);
+								
+								setCurrentEdge(edge);
+								
+								// Update TomTom
+								getNavigation().getCurrentRoute().remove(0);
+								didMove = true;
+								break;
+							} catch (IllegalStateException e) { // There is no space!
+								System.out.println(this.getName() + " - Lane is full");
+								continue; // Check next lane
+							}
+						}
+					}
+					break;
+				}
+			}
+			if (!didMove) {
+				throw new Exception("Car couldn't start.");
+			}
+			System.out.println(this.getName() + " - New route: " + getNavigation().getCurrentRoute());
+			
+			// Now start our engines!
+			addBehaviour(new DriveBehavior(this));
+		}
 	
 	public int getSpeed() {
 		return speed;
