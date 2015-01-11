@@ -1,5 +1,7 @@
 package behaviours;
 
+import java.util.Queue;
+
 import models.BaseCar;
 import models.Edge;
 import models.Vertex;
@@ -27,39 +29,73 @@ public class DriveBehavior extends Behaviour {
 	 */
 	@Override
 	public void action() {
-		// @todo move the car forward one place
-		iVehicle car = (iVehicle)this.myAgent; // Parse the Agent to Vehicle so we can use the Vehicle operations
-
-		// Determine which edge to drive on
-		Vertex nextVertex = (car.getNavigation().getCurrentRoute().size() > 1) ? car.getNavigation().getCurrentRoute().get(1) : null; // Get next Vertex (if any)
-		Vertex currentVertex = car.getNavigation().getCurrentRoute().get(0);
+		iVehicle car = (iVehicle)this.myAgent;
 		
-		if (nextVertex != null) {
-			System.out.println("moving to next vertex: " + nextVertex.getName());
-			for (Edge edge : currentVertex.getAdjacencies()) { // For every Edge
-				if (edge.getDestination().equals(nextVertex)) {
-					// We found our next edge: move one forward
-					if (car.getNavigation().getCurrentEdge() != null) {
-						car.getNavigation().getCurrentEdge().removeCar(car); // Remove from old location
+		Vertex startVertex = car.getNavigation().getCurrentRoute().get(0);
+		Vertex nextVertex = (car.getNavigation().getCurrentRoute().size() > 1) ? car.getNavigation().getCurrentRoute().get(1) : null;
+		
+		if (nextVertex == null) { // We reached our destination
+			// Check if we can leave the lane
+			boolean didLeave = false;
+			for (Queue<iVehicle> lane : car.getCurrentEdge().getLanes()) {
+				if (lane.peek() != null && lane.peek().equals(car)) { // Yes we can move!
+					// Remove our old location
+					car.getNavigation().getCurrentRoute().remove(0);
+					
+					// Remove ourselves from the previous Edge/Lane
+					if (car.getPreviousEdge() != null) {
+						lane.poll();
 					}
-					// Set it's new location (both on the Edge as well as the car)
-					edge.addCar(car);
-					car.getNavigation().setCurrentEdge(edge);
-					
-					System.out.println("There are " + edge.getCars().size() + "cars on the edge starting from " + currentVertex.getName());
-					
-					break;
+					car.setPreviousEdge(car.getCurrentEdge());
+					System.out.println("Destination Reached!");
+					return;
 				}
 			}
-		} else {
-			// Car reached it's destination. Remove it from it's location
-			car.getNavigation().getCurrentEdge().removeCar(car);
-			car.getNavigation().setCurrentEdge(null);
+			System.out.println("We are stuck!");
+			return;
 		}
 		
-		car.getNavigation().getCurrentRoute().remove(0); // Remove first object
+		// 1. Check if we can leave the road
+		boolean canLeave = false;
+		for (Queue<iVehicle> lane : car.getCurrentEdge().getLanes()) {
+			if (lane.peek() != null && lane.peek().equals(car)) { // Yes we can move!
+				boolean didMove = false;
+				// See if we can move forward
+				for (Edge edge : startVertex.getAdjacencies()) { // Get Next Vertex
+					if (edge.getDestination().equals(nextVertex)) {
+						// See if there is any room on this Edge
+						if (!edge.isClosed()) {
+							for (Queue<iVehicle> futureLane : edge.getLanes()) {
+								try {
+									futureLane.add(car);
+									// Update TomTom
+									car.getNavigation().getCurrentRoute().remove(0);
+									
+									// Remove ourselves from the previous Edge/Lane
+									if (car.getPreviousEdge() != null) {
+										lane.poll();
+									}
+									car.setPreviousEdge(car.getCurrentEdge());
+									
+									didMove = true;
+									break;
+								} catch (IllegalStateException e) { // There is no space!
+									continue; // Check next lane
+								}
+							}
+						}
+						break;
+					}
+				}
+				break;
+			} else {
+				return; // No we cannot move!
+			}
+		}
+		
+		System.out.println("New position: " + car.getNavigation().getCurrentRoute());
 	}
-
+		
 	/**
 	 * Checks whether we are done or not
 	 */
@@ -68,5 +104,5 @@ public class DriveBehavior extends Behaviour {
 		BaseCar car = (BaseCar)this.myAgent;
 		
 		return car.getNavigation().getCurrentRoute().isEmpty(); // if Car has no route anymore (i.e. reached it's destination)	
-	}	
+	}		
 }

@@ -19,6 +19,9 @@ public abstract class BaseCar extends Agent implements interfaces.iVehicle {
 	protected TomTom navigation;
 	private int priority = 1;
 	
+	private Edge currentEdge = null;
+	private Edge previousEdge = null;
+	
 	public BaseCar() {
 		this.speed = 120;
 		this.identifier = UUID.randomUUID().toString();
@@ -83,4 +86,22 @@ public abstract class BaseCar extends Agent implements interfaces.iVehicle {
 	public int getPriority() {
 		return priority;
 	}
+
+	public Edge getCurrentEdge() {
+		return currentEdge;
+	}
+
+	public void setCurrentEdge(Edge currentEdge) {
+		this.currentEdge = currentEdge;
+	}
+
+	public Edge getPreviousEdge() {
+		return previousEdge;
+	}
+
+	public void setPreviousEdge(Edge previousEdge) {
+		this.previousEdge = previousEdge;
+	}
+	
+	
 }

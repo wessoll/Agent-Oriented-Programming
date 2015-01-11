@@ -19,15 +19,17 @@ import java.util.PriorityQueue;
 public class TomTom {
 	
 	private List<Vertex> currentRoute; // Plotted route (null if none)
-	private Edge currentEdge; // Edge where we stand on
 	private Vertex[] roadMap; // The roadmap
 
-	
 	public TomTom() {
-		currentRoute = new ArrayList<Vertex>();
-		currentEdge = null;
+		this.currentRoute = new ArrayList<Vertex>();
 	}
 	
+	/**
+	 * Creates a shortest path between your current position and destination
+	 * @param source					Current position
+	 * @param destination				Destination
+	 */
 	public void plotRoute(Vertex source, Vertex destination) {
 		this.computePaths(source);
 		this.currentRoute = this.getShortestPathTo(destination);
@@ -113,16 +115,6 @@ public class TomTom {
 
 	public void setCurrentRoute(List<Vertex> currentRoute) {
 		this.currentRoute = currentRoute;
-	}
-
-	public Edge getCurrentEdge() {
-		return currentEdge;
-	}
-
-	public void setCurrentEdge(Edge currentEdge) {
-		this.currentEdge = currentEdge;
-	}
-	
-	
-	
+	}	
 }
+

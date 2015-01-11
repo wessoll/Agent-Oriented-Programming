@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Observable;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
@@ -14,7 +15,7 @@ import java.util.Queue;
  * @author wesley
  *
  */
-public class Edge implements Serializable {
+public class Edge extends Observable implements Serializable {
 	public final Vertex destination;
 	
 	/**
@@ -24,49 +25,29 @@ public class Edge implements Serializable {
 	private boolean isClosed 		= false;
 	private int speedLimit 			= 120;
 	private double weight; // @todo, this is now the same for every car, but should be made unique
-	private Queue<iVehicle> lane;
+	private List<Queue<iVehicle>> lanes;
 	
 	/**
 	 * Constructor
 	 * @param destination				Where you want to go to
 	 * @param weight					The weight for this path
 	 */
-	public Edge(Vertex destination, double weight, int id, int capacity ) {
-		Comparator<iVehicle> comparator = new PriorityComparator();
-		this.lane = new PriorityQueue<iVehicle>(capacity, comparator); 
+	public Edge(Vertex destination, double weight, int id) {
+		int lanes = 2; // @todo make this dynamic in future
+		
+		this.lanes = new ArrayList<Queue<iVehicle>>();
+		for (int i=0;i<lanes;i++) { // Initialize the lanes
+			Comparator<iVehicle> comparator = new PriorityComparator();
+			
+			Queue<iVehicle> test = new PriorityQueue<iVehicle>(10);
+			this.lanes.add(new PriorityQueue<iVehicle>(10, comparator)); 
+		}
 		
 		this.id = id;
 		this.destination = destination;
 		this.weight = weight;
 	}
 
-	public Queue<iVehicle> getCars() {
-		return lane;
-	}
-
-	public void setCars(Queue<iVehicle> cars) {
-		this.lane = cars;
-	}
-
-	public void addCar(iVehicle car) {
-		this.lane.add(car);
-	}
-	
-	public void removeCar(iVehicle car) {
-		this.lane.remove(car);
-	}
-	
-	public int laneSize(){
-		return lane.size();
-	}
-	
-	public boolean isHasObstacle() {
-		return isClosed;
-	}
-
-	public void setHasObstacle(boolean hasObstacle) {
-		this.isClosed = hasObstacle;
-	}
 
 	public int getSpeedLimit() {
 		return speedLimit;
@@ -102,5 +83,13 @@ public class Edge implements Serializable {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public List<Queue<iVehicle>> getLanes() {
+		return lanes;
+	}
+
+	public void setLanes(List<Queue<iVehicle>> lanes) {
+		this.lanes = lanes;
 	}
 }
