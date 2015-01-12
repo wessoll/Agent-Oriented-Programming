@@ -1,8 +1,8 @@
 Agent-Oriented-Programming
 ==========================
 
-AOP Project
-
+Omschrijving
+====
 Dit programma simuleert het wegverkeer over een aantal snelwegen. 
 
 Er is een World waarin een aantal Vertices aan elkaar gekoppeld zijn d.m.v. Edges. Er zijn Voertuig-Agents die een navigatiesysteem bevatten (een TomTom). De TomTom vraagt aan de InfoAgent een RoadMap op. Deze RoadMap is een simpele kopie van de World. Het verschil zit hem erin dat de InfoAgent deze RoadMap ook update (bijv. bij een gesloten weg). Als we een RoadMap opvragen dan weten we dus zeker dat het de meest up-to-date versie is. Op deze manier kunnen de Voertuig-Agents ook hun eigen "weight" meegeven aan Edges. De TomTom (die gebruik maakt van Dijkstra's algoritme) kan dan zo routes bepalen die verschillend zijn voor de voertuigen.
@@ -12,4 +12,10 @@ Wanneer er een ongeval op de weg gebeurt en de weg (=Edge) moet worden gesloten,
 Iedere Edge bevat tevens een of meerdere Lanes die zijn geimplementeerd m.b.v. Queue's. Zo sluiten voertuigen netjes achter elkaar aan. De Voertuig-Agents mogen wel een eigen kopie hebben van de RoadMap, maar ze gebruiken de World om op te rijden. De object referenties van World worden onderling gedeeld om dit mogelijk te maken. Wanneer de Lanes vol dreigen te raken, dan kan een auto ook niet verder en blijft dus staan wachten. Dit is bijv. het geval wanneer een Edge gesloten is, alle auto's die nog niet hun route hebben aangepast en toch op de Lane komen veroorzaken file.
 
 Het was de bedoeling van deze Lanes dat een Noodvoertuig-Agent een bericht zou sturen naar nabije Voertuig-Agents, zodat deze laatste konden schakelen tussen de Lanes om de Noodvoertuig-Agent door te laten. Helaas is dit nog maar deels gerealiseerd.
+
+Hoe starten?
+====
+AgentProgram.java is de main class die een aantal voertuigen aanmaakt. De agent's communiceren voor de laatste roadmap en gaan dan op weg naar hun bestemming, waar ze in de file komen te staan door een gesloten weg.
+
+
 
